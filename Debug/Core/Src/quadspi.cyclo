@@ -1,4 +1,4 @@
-../Core/Src/quadspi.c:37:6:MX_QUADSPI_Init	3
+../Core/Src/quadspi.c:37:6:MX_QUADSPI_Init	2
 ../Core/Src/quadspi.c:84:6:HAL_QSPI_MspInit	2
 ../Core/Src/quadspi.c:143:6:HAL_QSPI_MspDeInit	2
 ../Core/Src/quadspi.c:178:6:QSPI_WriteEnable	3
@@ -6,5 +6,3 @@
 ../Core/Src/quadspi.c:245:6:QSPI_DummyCyclesCfg	5
 ../Core/Src/quadspi.c:290:6:QSPI_WriteData	3
 ../Core/Src/quadspi.c:312:6:QSPI_ReadData	3
-../Core/Src/quadspi.c:331:6:QSPI_WriteImage	5
-../Core/Src/quadspi.c:368:6:QSPI_Read_Image	4

@@ -6,5 +6,3 @@
 ../Core/Src/quadspi.c:245:6:QSPI_DummyCyclesCfg	88	static,ignoring_inline_asm
 ../Core/Src/quadspi.c:290:6:QSPI_WriteData	24	static
 ../Core/Src/quadspi.c:312:6:QSPI_ReadData	24	static
-../Core/Src/quadspi.c:331:6:QSPI_WriteImage	16	static
-../Core/Src/quadspi.c:368:6:QSPI_Read_Image	16	static

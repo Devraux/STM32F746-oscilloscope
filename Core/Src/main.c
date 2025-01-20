@@ -28,6 +28,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "core_cm7.h"
+#include "example_RGB_Buffer.h"
 #include "lvgl.h"
 #include "ui.h"
 
@@ -52,8 +53,8 @@
 
 /* USER CODE BEGIN PV */
 
-static uint8_t buf1[RESOLUTION_HORIZONTAL * RESOLUTION_VERTICAL / 10 * BYTES_PER_PIXEL];
-static uint16_t *framebuffer = NULL;
+uint8_t buf1[RESOLUTION_HORIZONTAL * RESOLUTION_VERTICAL / 10 * BYTES_PER_PIXEL];
+uint16_t *framebuffer;
 
 uint32_t my_ltdc_layer_index = 0; /* typically 0 or 1 */
 /* USER CODE END PV */
@@ -91,8 +92,8 @@ void my_flush_cb(lv_display_t *display, const lv_area_t *area, uint8_t *px_map) 
             buf16++;
         }
     }
-
-    display_Simple_Update((uint32_t*)framebuffer);
+    printf("x: %ld\n\r", x);
+    display_Simple_Update(framebuffer);
     SCB_CleanInvalidateDCache();
     lv_display_flush_ready(display);
 }
@@ -141,15 +142,31 @@ int main(void)
   /* USER CODE BEGIN 2 */
 
   // LVGL initialization //
-  framebuffer = (uint16_t *)malloc(sizeof(buf1));
-  lv_init();
-  lv_tick_set_cb(HAL_GetTick);
-  lv_display_t *display1 = lv_display_create(RESOLUTION_HORIZONTAL, RESOLUTION_VERTICAL);
-  lv_display_set_buffers(display1, buf1, NULL, sizeof(buf1), LV_DISPLAY_RENDER_MODE_PARTIAL);
-  lv_display_set_flush_cb(display1, my_flush_cb);
+//  framebuffer = (uint16_t *)malloc(261120);
+//  if(framebuffer == NULL)
+//	  printf("NULL POINTER");
+//
+//  lv_init();
+//  lv_tick_set_cb(HAL_GetTick);
+//  lv_display_t *display1 = lv_display_create(RESOLUTION_HORIZONTAL, RESOLUTION_VERTICAL);
+//  lv_display_set_buffers(display1, buf1, NULL, sizeof(buf1), LV_DISPLAY_RENDER_MODE_PARTIAL);
+//  lv_display_set_flush_cb(display1, my_flush_cb);
+//
+//  //lv_display_set_rotation(display1, LV_DISP_ROTATION_90);
+//  ui_init();
 
-  lv_display_set_rotation(display1, LV_DISP_ROTATION_90);
-  ui_init();
+
+  // QUAD SPI FLASH MEMORY - EXAMPLE TEST CODE//
+   	//uint8_t dataToWrite[] = {"jakis tam napis"};
+	//uint8_t dataRead[BUFFERSIZE(dataToWrite)] = {0};
+	//uint32_t writeAddress = 0x00000000;
+	//uint32_t readAddress  = 0x00000000;
+	//QSPI_WriteData(dataToWrite, BUFFERSIZE(dataToWrite), writeAddress);
+	//QSPI_ReadData(dataRead, BUFFERSIZE(dataToWrite), readAddress);
+	//printf("data: %s\n\r", dataRead);
+
+
+  QSPI_WriteData((uint8_t*)&RGB565_480x272, 261120, 0x00000000);
 
   /* USER CODE END 2 */
 
@@ -157,21 +174,14 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  //printf("hello world\n\r");
-	  //HAL_GPIO_TogglePin(USER_LED_GPIO_Port, USER_LED_Pin);
-	  //HAL_Delay(900);
+	  printf("...***...\n\r");
+	  HAL_GPIO_TogglePin(USER_LED_GPIO_Port, USER_LED_Pin);
+	  HAL_Delay(900);
 
-	  //HAL_GPIO_TogglePin(USER_LED_GPIO_Port, USER_LED_Pin);
-	  //uint32_t time_till_next = lv_timer_handler();
-      //SCB_CleanInvalidateDCache();
-	  //HAL_Delay(time_till_next);
-	  //HAL_GPIO_TogglePin(USER_LED_GPIO_Port, USER_LED_Pin);
-	  //HAL_Delay(500);
 
-	  HAL_Delay(5);
-	  lv_task_handler();
-//	  display_Simple_Update((uint32_t*)framebuffer);
-//	  SCB_CleanInvalidateDCache();
+//	  HAL_Delay(5);
+//	  lv_task_handler();
+
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */

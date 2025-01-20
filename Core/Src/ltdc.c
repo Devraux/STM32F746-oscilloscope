@@ -78,7 +78,15 @@ void MX_LTDC_Init(void)
   pLayerCfg.Backcolor.Green = 0;
   pLayerCfg.Backcolor.Red = 0;
 
-  //pLayerCfg.FBStartAdress = (uint32_t)&RGB565_480x272;
+  printf("before read data works\n\r");
+  uint8_t *image_buffer = (uint8_t*)malloc(261120);
+  if(image_buffer == NULL)
+	  printf("image_buffer is NULL ptr\n\r");
+  fflush(stdout);
+
+
+  QSPI_ReadData(image_buffer, 261120, 0x00000000);
+  pLayerCfg.FBStartAdress = (uint32_t)image_buffer;
 
   if (HAL_LTDC_ConfigLayer(&hltdc, &pLayerCfg, 0) != HAL_OK)
   {
@@ -93,7 +101,6 @@ void MX_LTDC_Init(void)
 
 void HAL_LTDC_MspInit(LTDC_HandleTypeDef* ltdcHandle)
 {
-
   GPIO_InitTypeDef GPIO_InitStruct = {0};
   RCC_PeriphCLKInitTypeDef PeriphClkInitStruct = {0};
   if(ltdcHandle->Instance==LTDC)
@@ -294,7 +301,7 @@ void display_BL_Set(bool back_Light_State)
 	HAL_GPIO_WritePin(GPIOK, GPIO_PIN_3, back_Light_State);
 }
 
-void display_Simple_Update(uint32_t *buffer)
+void display_Simple_Update(uint16_t *buffer)
 {
 	LTDC_LayerCfgTypeDef pLayer = {0};
 	pLayer.WindowX0 = 0;

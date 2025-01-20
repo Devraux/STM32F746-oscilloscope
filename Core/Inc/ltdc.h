@@ -51,7 +51,7 @@ void display_Activate(void);
 void display_BL_Set(bool back_Light_State);
 void display_Draw_Rectangle(uint32_t x_px, uint32_t y_px, uint32_t width_px, uint32_t heigh_px, uint32_t colour);
 void display_Draw_Circle(uint32_t x_px, uint32_t y_px, uint32_t radius_px, uint32_t colour);
-void display_Simple_Update(uint32_t *buffer);
+void display_Simple_Update(uint16_t *buffer);
 
 
 /* USER CODE END Prototypes */
