@@ -1,8 +1,0 @@
-../Core/Src/quadspi.c:37:6:MX_QUADSPI_Init	8	static
-../Core/Src/quadspi.c:84:6:HAL_QSPI_MspInit	56	static
-../Core/Src/quadspi.c:143:6:HAL_QSPI_MspDeInit	16	static
-../Core/Src/quadspi.c:178:6:QSPI_WriteEnable	96	static
-../Core/Src/quadspi.c:216:6:QSPI_AutoPollingMemReady	96	static
-../Core/Src/quadspi.c:245:6:QSPI_DummyCyclesCfg	88	static,ignoring_inline_asm
-../Core/Src/quadspi.c:290:6:QSPI_WriteData	24	static
-../Core/Src/quadspi.c:312:6:QSPI_ReadData	24	static

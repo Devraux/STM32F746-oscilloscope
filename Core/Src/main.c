@@ -20,10 +20,10 @@
 #include "main.h"
 #include "dma2d.h"
 #include "ltdc.h"
-#include "quadspi.h"
 #include "tim.h"
 #include "usart.h"
 #include "gpio.h"
+#include "fmc.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -31,6 +31,7 @@
 #include "example_RGB_Buffer.h"
 #include "lvgl.h"
 #include "ui.h"
+#include "STM32F746_Hardware_Lib/stm32746g_discovery_sdram.h"
 
 /* USER CODE END Includes */
 
@@ -78,25 +79,26 @@ void CPU_CACHE_Enable(void)
 {
   SCB_EnableICache();
   SCB_EnableDCache();
-  //SCB_CleanInvalidateDCache();
-  //SCB_InvalidateICache();
 }
 
 void my_flush_cb(lv_display_t *display, const lv_area_t *area, uint8_t *px_map) {
     uint16_t *buf16 = (uint16_t *)px_map;
     int32_t x, y;
 
-    for(y = area->y1; y <= area->y2; y++) {
-        for(x = area->x1; x <= area->x2; x++) {
-            framebuffer[y * 480 + x] = *buf16;
+
+    uint32_t sdram_address = SDRAM_BANK_ADDR;
+
+    for (y = area->y1; y <= area->y2; y++) {
+        for (x = area->x1; x <= area->x2; x++) {
+            BSP_SDRAM_WriteData(SDRAM_BANK_ADDR + (y * 240 + x) * sizeof(uint16_t), buf16, sizeof(uint16_t));
             buf16++;
         }
     }
-    printf("x: %ld\n\r", x);
-    display_Simple_Update(framebuffer);
-    SCB_CleanInvalidateDCache();
+
+    display_Simple_Update(SDRAM_BANK_ADDR);
     lv_display_flush_ready(display);
 }
+
 
 
 
@@ -136,56 +138,54 @@ int main(void)
   MX_GPIO_Init();
   MX_USART1_UART_Init();
   MX_LTDC_Init();
-  MX_QUADSPI_Init();
   MX_TIM7_Init();
   MX_DMA2D_Init();
+  BSP_SDRAM_Init();//MX_FMC_Init();
   /* USER CODE BEGIN 2 */
 
-  // LVGL initialization //
-//  framebuffer = (uint16_t *)malloc(261120);
-//  if(framebuffer == NULL)
-//	  printf("NULL POINTER");
-//
-//  lv_init();
-//  lv_tick_set_cb(HAL_GetTick);
-//  lv_display_t *display1 = lv_display_create(RESOLUTION_HORIZONTAL, RESOLUTION_VERTICAL);
-//  lv_display_set_buffers(display1, buf1, NULL, sizeof(buf1), LV_DISPLAY_RENDER_MODE_PARTIAL);
-//  lv_display_set_flush_cb(display1, my_flush_cb);
-//
-//  //lv_display_set_rotation(display1, LV_DISP_ROTATION_90);
-//  ui_init();
+// LVGL initialization //
+	framebuffer = (uint16_t *)malloc(261120);
+	if(framebuffer == NULL)
+		printf("NULL POINTER");
+
+	lv_init();
+	lv_tick_set_cb(HAL_GetTick);
+	lv_display_t *display1 = lv_display_create(RESOLUTION_HORIZONTAL, RESOLUTION_VERTICAL);
+	lv_display_set_buffers(display1, buf1, NULL, sizeof(buf1), LV_DISPLAY_RENDER_MODE_PARTIAL);
+	lv_display_set_flush_cb(display1, my_flush_cb);
+	ui_init();
 
 
-  // QUAD SPI FLASH MEMORY - EXAMPLE TEST CODE//
-   	//uint8_t dataToWrite[] = {"jakis tam napis"};
-	//uint8_t dataRead[BUFFERSIZE(dataToWrite)] = {0};
-	//uint32_t writeAddress = 0x00000000;
-	//uint32_t readAddress  = 0x00000000;
-	//QSPI_WriteData(dataToWrite, BUFFERSIZE(dataToWrite), writeAddress);
-	//QSPI_ReadData(dataRead, BUFFERSIZE(dataToWrite), readAddress);
-	//printf("data: %s\n\r", dataRead);
+	uint16_t data_to_write[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 0};
+	uint16_t read_data[sizeof(data_to_write)] = {0};
+	BSP_SDRAM_WriteData(0xC0000000, (uint16_t*)data_to_write, sizeof(data_to_write)/sizeof(data_to_write[0]));
+	BSP_SDRAM_ReadData(0xC0000000, (uint16_t*)read_data, sizeof(data_to_write)/sizeof(data_to_write[0]));
 
+	printf("hello world\n");
+	for(uint32_t i = 0; i < sizeof(data_to_write)/sizeof(data_to_write[0]); i++)
+		printf("%d\r\n", read_data[i]);
 
-  QSPI_WriteData((uint8_t*)&RGB565_480x272, 261120, 0x00000000);
+	fflush(stdout);
 
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  while (1)
-  {
-	  printf("...***...\n\r");
-	  HAL_GPIO_TogglePin(USER_LED_GPIO_Port, USER_LED_Pin);
-	  HAL_Delay(900);
+	while (1)
+	{
+		//	  printf("...***...\n\r");
+		//	  HAL_GPIO_TogglePin(USER_LED_GPIO_Port, USER_LED_Pin);
+		//	  HAL_Delay(900);
 
 
-//	  HAL_Delay(5);
-//	  lv_task_handler();
+
+		HAL_Delay(10);
+		lv_task_handler();
 
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-  }
+	}
   /* USER CODE END 3 */
 }
 
@@ -201,7 +201,7 @@ void SystemClock_Config(void)
   /** Configure the main internal regulator output voltage
   */
   __HAL_RCC_PWR_CLK_ENABLE();
-  __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE3);
+  __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE1);
 
   /** Initializes the RCC Oscillators according to the specified parameters
   * in the RCC_OscInitTypeDef structure.
@@ -212,10 +212,17 @@ void SystemClock_Config(void)
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSI;
   RCC_OscInitStruct.PLL.PLLM = 8;
-  RCC_OscInitStruct.PLL.PLLN = 50;
+  RCC_OscInitStruct.PLL.PLLN = 200;
   RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV2;
   RCC_OscInitStruct.PLL.PLLQ = 2;
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
+  {
+    Error_Handler();
+  }
+
+  /** Activate the Over-Drive mode
+  */
+  if (HAL_PWREx_EnableOverDrive() != HAL_OK)
   {
     Error_Handler();
   }
@@ -225,11 +232,11 @@ void SystemClock_Config(void)
   RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
                               |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
   RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
-  RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV2;
-  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
-  RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
+  RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
+  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV4;
+  RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV2;
 
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_0) != HAL_OK)
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_6) != HAL_OK)
   {
     Error_Handler();
   }
@@ -260,7 +267,7 @@ static void MPU_Config(void)
 
   /* Configure the MPU QSPI flash */
   MPU_InitStruct.Enable = MPU_REGION_ENABLE;
-  MPU_InitStruct.BaseAddress = 0x90000000;
+  MPU_InitStruct.BaseAddress = 0xC0000000;
   MPU_InitStruct.Size = MPU_REGION_SIZE_16MB;
   MPU_InitStruct.AccessPermission = MPU_REGION_FULL_ACCESS;
   MPU_InitStruct.IsBufferable = MPU_ACCESS_NOT_BUFFERABLE;

@@ -22,6 +22,7 @@ C_DEPS :=
 
 # Every subdirectory with source files must be described here
 SUBDIRS := \
+Core/Src/STM32F746_Hardware_Lib \
 Core/Src \
 Core/Src/lvgl/demos/benchmark/assets \
 Core/Src/lvgl/demos/benchmark \

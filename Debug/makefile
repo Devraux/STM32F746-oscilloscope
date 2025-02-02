@@ -247,6 +247,7 @@ RM := rm -rf
 -include Core/Src/lvgl/demos/benchmark/assets/subdir.mk
 -include Core/Src/lvgl/demos/benchmark/subdir.mk
 -include Core/Src/lvgl/demos/subdir.mk
+-include Core/Src/STM32F746_Hardware_Lib/subdir.mk
 -include Core/Src/subdir.mk
 -include objects.mk
 

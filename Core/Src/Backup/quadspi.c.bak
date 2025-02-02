@@ -63,7 +63,7 @@ void MX_QUADSPI_Init(void)
   // ENABLE WRITE OPERATION AND ERASE MEMORY SPACE //
     QSPI_WriteEnable(&hqspi);
 
-    sCommand.Instruction = BULK_ERASE_CMD; // SECTOR_ERASE_CMD;
+    sCommand.Instruction = SECTOR_ERASE_CMD; // SECTOR_ERASE_CMD;
     sCommand.AddressMode = QSPI_ADDRESS_1_LINE;
   	sCommand.Address     = 0;
   	sCommand.DataMode    = QSPI_DATA_NONE;
@@ -256,7 +256,7 @@ void QSPI_DummyCyclesCfg(QSPI_HandleTypeDef *QSPIHandle)
   sCommand_t.DummyCycles       = 0;
   sCommand_t.DdrMode           = QSPI_DDR_MODE_DISABLE;
   sCommand_t.DdrHoldHalfCycle  = QSPI_DDR_HHC_ANALOG_DELAY;
-  sCommand_t.SIOOMode         = QSPI_SIOO_INST_EVERY_CMD;
+  sCommand_t.SIOOMode          = QSPI_SIOO_INST_EVERY_CMD;
   sCommand_t.NbData            = 1;
 
   if (HAL_QSPI_Command(QSPIHandle, &sCommand_t, HAL_QPSI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
@@ -287,14 +287,14 @@ void QSPI_DummyCyclesCfg(QSPI_HandleTypeDef *QSPIHandle)
   }
 }
 
-void QSPI_WriteData(uint8_t *data, uint32_t data_Byte_Length, uint32_t address)
+void QSPI_WriteData(uint8_t *data, uint32_t data_ByteLength, uint32_t address)
 {
 	QSPI_WriteEnable(&hqspi);
 	sCommand.Instruction = QUAD_IN_FAST_PROG_CMD;
 	sCommand.AddressMode = QSPI_ADDRESS_1_LINE;
 	sCommand.DataMode    = QSPI_DATA_4_LINES;
 	sCommand.Address     = address;
-	sCommand.NbData      = data_Byte_Length;
+	sCommand.NbData      = data_ByteLength;
 
 	if(HAL_QSPI_Command(&hqspi, &sCommand, HAL_QPSI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
 	{
@@ -309,13 +309,13 @@ void QSPI_WriteData(uint8_t *data, uint32_t data_Byte_Length, uint32_t address)
 	QSPI_AutoPollingMemReady(&hqspi);
 }
 
-void QSPI_ReadData(uint8_t  *data, uint32_t data_Byte_Length, uint32_t address)
+void QSPI_ReadData(uint8_t *data, uint32_t data_ByteLength, uint32_t address)
 {
 	QSPI_DummyCyclesCfg(&hqspi);
 	sCommand.Instruction = QUAD_OUT_FAST_READ_CMD;
 	sCommand.DummyCycles = DUMMY_CLOCK_CYCLES_READ_QUAD;
 	sCommand.Address     = address;
-	sCommand.NbData      = data_Byte_Length;
+	sCommand.NbData      = data_ByteLength;
 
 	if(HAL_QSPI_Command(&hqspi, &sCommand, HAL_QPSI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
 	{
@@ -328,74 +328,27 @@ void QSPI_ReadData(uint8_t  *data, uint32_t data_Byte_Length, uint32_t address)
 	}
 }
 
-void QSPI_WriteImage(uint8_t *data, uint8_t ImageNumber)
-{
-		// first erase memory
-		QSPI_WriteEnable(&hqspi);
-		sCommand.Instruction = BULK_ERASE_CMD; // SECTOR_ERASE_CMD;
-	    sCommand.AddressMode = QSPI_ADDRESS_1_LINE;
-	  	sCommand.Address     = 0;
-	  	sCommand.DataMode    = QSPI_DATA_NONE;
-	  	sCommand.DummyCycles = 0;
 
-	  	if(HAL_QSPI_Command_IT(&hqspi, &sCommand) != HAL_OK)
-	 	{
-	  		Error_Handler();
-	  	}
 
-	  	QSPI_AutoPollingMemReady(&hqspi);
-
-		//QSPI_WriteEnable(&hqspi);
-		sCommand.Instruction = QUAD_IN_FAST_PROG_CMD;
-		sCommand.AddressMode = QSPI_ADDRESS_1_LINE;
-		sCommand.DataMode    = QSPI_DATA_4_LINES;
-		sCommand.Address     = GET_BASE_ADDRESS(ImageNumber);
-		sCommand.NbData      = 65280;
-
-		if(HAL_QSPI_Command(&hqspi, &sCommand, HAL_QPSI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
-		{
-			Error_Handler();
-		}
-
-		if(HAL_QSPI_Transmit_IT(&hqspi, data) != HAL_OK)
-		{
-			Error_Handler();
-		}
-
-		QSPI_AutoPollingMemReady(&hqspi);
-}
-
-void QSPI_Read_Image(uint8_t *data, uint8_t ImageNumber)
-{
-	QSPI_DummyCyclesCfg(&hqspi);
-	sCommand.Instruction = QUAD_OUT_FAST_READ_CMD;
-	sCommand.DummyCycles = DUMMY_CLOCK_CYCLES_READ_QUAD;
-	sCommand.Address     = GET_BASE_ADDRESS(ImageNumber);
-	sCommand.NbData      = 65280;
-
-	if(HAL_QSPI_Command(&hqspi, &sCommand, HAL_QPSI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
-	{
-		Error_Handler();
-	}
-
-	if(HAL_QSPI_Receive_IT(&hqspi, data) != HAL_OK)
-	{
-		Error_Handler();
-	}
-}
 
 
 
 // QUAD SPI FLASH MEMORY - EXAMPLE TEST CODE//
-// uint8_t dataToWrite[] = {" ****QSPI communication based on IT****  ****QSPI communication based on IT****  ****QSPI communication based on IT****  ****QSPI communication based on IT****  ****QSPI communication based on IT****  ****QSPI communication based on IT**** "};
-//  uint8_t dataRead[BUFFERSIZE] = {0};
+//   	uint8_t dataToWrite[] = {"jakis tam napis"};
+//	uint8_t dataRead[BUFFERSIZE(dataToWrite)] = {0};
 //
-//  uint32_t writeAddress = 0x00000000;
-//  uint32_t readAddress  = 0x00000000;
+//	uint32_t writeAddress = 0x00000000;
+//	uint32_t readAddress  = 0x00000000;
 //
-//  QSPI_WriteData(dataToWrite, BUFFERSIZE, writeAddress);
-//  QSPI_ReadData(dataRead, BUFFERSIZE, readAddress);
+//	QSPI_WriteData(dataToWrite, BUFFERSIZE(dataToWrite), writeAddress);
+//	QSPI_ReadData(dataRead, BUFFERSIZE(dataToWrite), readAddress);
 //
-//  printf("Read data: %s", dataRead);
+//
+//	printf("received data: %s\n\r", dataRead);
+//
+//
+//	for(uint32_t i = 0; i < BUFFERSIZE(dataToWrite); i++)
+//		printf("data[%lu]: %d\n\r", i, dataRead[i]);
+//	printf("received data: %s\n\r", dataRead);
 
 /* USER CODE END 1 */

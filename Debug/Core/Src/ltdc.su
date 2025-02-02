@@ -1,6 +1,6 @@
-../Core/Src/ltdc.c:33:6:MX_LTDC_Init	64	static
-../Core/Src/ltdc.c:102:6:HAL_LTDC_MspInit	192	static
-../Core/Src/ltdc.c:215:6:HAL_LTDC_MspDeInit	16	static
-../Core/Src/ltdc.c:280:6:display_Activate	32	static
-../Core/Src/ltdc.c:292:6:display_BL_Set	40	static
-../Core/Src/ltdc.c:304:6:display_Simple_Update	72	static
+../Core/Src/ltdc.c:31:6:MX_LTDC_Init	64	static
+../Core/Src/ltdc.c:128:6:HAL_LTDC_MspInit	192	static
+../Core/Src/ltdc.c:242:6:HAL_LTDC_MspDeInit	16	static
+../Core/Src/ltdc.c:307:6:display_Activate	32	static
+../Core/Src/ltdc.c:319:6:display_BL_Set	40	static
+../Core/Src/ltdc.c:331:6:display_Simple_Update	72	static

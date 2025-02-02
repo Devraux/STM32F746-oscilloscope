@@ -36,7 +36,7 @@ extern QSPI_HandleTypeDef hqspi;
 
 /* USER CODE BEGIN Private defines */
 
-#define BUFFERSIZE                 (COUNTOF(dataToWrite) - 1)
+#define BUFFERSIZE(dataToWrite)    (COUNTOF(dataToWrite)) //(COUNTOF(dataToWrite) - 1)
 #define COUNTOF(__BUFFER__)        (sizeof(__BUFFER__) / sizeof(*(__BUFFER__)))
 
 #define GET_BASE_ADDRESS(__number__) __number__ == 1 ? 0x00000000 : 0x0000ff00
@@ -152,21 +152,8 @@ void MX_QUADSPI_Init(void);
 void QSPI_WriteEnable(QSPI_HandleTypeDef *hqspi);
 void QSPI_AutoPollingMemReady(QSPI_HandleTypeDef *hqspi);
 void QSPI_DummyCyclesCfg(QSPI_HandleTypeDef *hqspi);
-void QSPI_WriteData(uint8_t *data, uint32_t data_Byte_Length, uint32_t address);
-void QSPI_ReadData(uint8_t  *data, uint32_t data_Byte_Length, uint32_t address);
-
-
-// Write data to QSPI Flash memory
-// data - data to write
-// ImageNumber - Image number(1 or 2) which you want to write - allows to write data to 2 different places in QSPI Flash memory
-// IMPORTANT default data buffer length id 65280(1 standard image)
-void QSPI_WriteImage(uint8_t *data, uint8_t ImageNumber);
-
-// Read data to QSPI Flash memory
-// data - place where read data will be save
-// ImageNumber - Image number(1 or 2) which you want to read - allows to read data from 2 different places in QSPI Flash memory
-// IMPORTANT default data buffer length id 65280(1 standard image)
-void QSPI_Read_Image(uint8_t *data, uint8_t ImageNumber);
+void QSPI_WriteData(uint8_t *data, uint32_t data_ByteLength, uint32_t address);
+void QSPI_ReadData(uint8_t  *data, uint32_t data_ByteLength, uint32_t address);
 
 /* USER CODE END Prototypes */
 
