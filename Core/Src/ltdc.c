@@ -107,7 +107,7 @@ void MX_LTDC_Init(void)
 //      Error_Handler();
 //    }
 //    pLayerCfg.WindowX0 			= 0;
-//    pLayerCfg.WindowX1 			= 240;
+//    pLayerCfg.WindowX1 			= 480;
 //    pLayerCfg.WindowY0 			= 0;
 //    pLayerCfg.WindowY1 			= 272;
 //    pLayerCfg.PixelFormat 		= LTDC_PIXEL_FORMAT_RGB565;
@@ -116,7 +116,7 @@ void MX_LTDC_Init(void)
 //    pLayerCfg.BlendingFactor1 	= LTDC_BLENDING_FACTOR1_CA;
 //    pLayerCfg.BlendingFactor2 	= LTDC_BLENDING_FACTOR2_CA;
 //    pLayerCfg.FBStartAdress 		= 0;
-//    pLayerCfg.ImageWidth 			= 240;
+//    pLayerCfg.ImageWidth 			= 480;
 //    pLayerCfg.ImageHeight 		= 272;
 //    pLayerCfg.Backcolor.Blue 		= 0;
 //    pLayerCfg.Backcolor.Green 	= 0;

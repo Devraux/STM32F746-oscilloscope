@@ -55,13 +55,13 @@ void MX_FMC_Init(void)
   hsdram1.Init.ReadBurst = FMC_SDRAM_RBURST_DISABLE;
   hsdram1.Init.ReadPipeDelay = FMC_SDRAM_RPIPE_DELAY_0;
   /* SdramTiming */
-  SdramTiming.LoadToActiveDelay 	= 16;
-  SdramTiming.ExitSelfRefreshDelay 	= 16;
-  SdramTiming.SelfRefreshTime 		= 16;
-  SdramTiming.RowCycleDelay 		= 16;
-  SdramTiming.WriteRecoveryTime 	= 16;
-  SdramTiming.RPDelay 				= 16;
-  SdramTiming.RCDDelay 				= 16;
+  SdramTiming.LoadToActiveDelay = 16;
+  SdramTiming.ExitSelfRefreshDelay = 16;
+  SdramTiming.SelfRefreshTime = 16;
+  SdramTiming.RowCycleDelay = 16;
+  SdramTiming.WriteRecoveryTime = 16;
+  SdramTiming.RPDelay = 16;
+  SdramTiming.RCDDelay = 16;
 
   if (HAL_SDRAM_Init(&hsdram1, &SdramTiming) != HAL_OK)
   {

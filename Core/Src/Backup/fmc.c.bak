@@ -70,6 +70,10 @@ void MX_FMC_Init(void)
 
   /* USER CODE BEGIN FMC_Init 2 */
 
+  //SDRAM initialization Sequence
+  BSP_SDRAM_Initialization_sequence(REFRESH_COUNT);
+
+
   /* USER CODE END FMC_Init 2 */
 }
 

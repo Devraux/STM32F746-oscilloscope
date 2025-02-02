@@ -18,6 +18,8 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "adc.h"
+#include "dma.h"
 #include "dma2d.h"
 #include "ltdc.h"
 #include "tim.h"
@@ -133,12 +135,18 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
+  MX_DMA_Init();
   MX_USART1_UART_Init();
   MX_LTDC_Init();
   MX_TIM7_Init();
   MX_DMA2D_Init();
-  BSP_SDRAM_Init();//MX_FMC_Init();
+  //MX_FMC_Init();
+  MX_ADC1_Init();
+  MX_ADC3_Init();
   /* USER CODE BEGIN 2 */
+
+  // !!! @ATTENTION SDRAM AND LTDC HAVE TO BE INITIALIZED IN THIS WAY:!!!
+  BSP_SDRAM_Init();
 
 // LVGL initialization //
 

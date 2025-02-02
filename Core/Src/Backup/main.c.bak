@@ -18,9 +18,10 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "adc.h"
+#include "dma.h"
 #include "dma2d.h"
 #include "ltdc.h"
-#include "quadspi.h"
 #include "tim.h"
 #include "usart.h"
 #include "gpio.h"
@@ -32,6 +33,7 @@
 #include "example_RGB_Buffer.h"
 #include "lvgl.h"
 #include "ui.h"
+#include "STM32F746_Hardware_Lib/stm32746g_discovery_sdram.h"
 
 /* USER CODE END Includes */
 
@@ -85,15 +87,17 @@ void my_flush_cb(lv_display_t *display, const lv_area_t *area, uint8_t *px_map) 
     uint16_t *buf16 = (uint16_t *)px_map;
     int32_t x, y;
 
-    for(y = area->y1; y <= area->y2; y++) {
-        for(x = area->x1; x <= area->x2; x++) {
-            framebuffer[y * 240 + x] = *buf16;
+    for (y = area->y1; y <= area->y2; y++) {
+        for (x = area->x1; x <= area->x2; x++) {
+            BSP_SDRAM_WriteData(SDRAM_BANK_ADDR + (y * 480 + x) * sizeof(uint16_t), buf16, sizeof(uint16_t));
             buf16++;
         }
     }
-    display_Simple_Update(framebuffer);
+
+    display_Simple_Update(SDRAM_BANK_ADDR);
     lv_display_flush_ready(display);
 }
+
 
 
 
@@ -119,7 +123,7 @@ int main(void)
   HAL_Init();
 
   /* USER CODE BEGIN Init */
-	CPU_CACHE_Enable();
+  CPU_CACHE_Enable();
   /* USER CODE END Init */
 
   /* Configure the system clock */
@@ -131,18 +135,20 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
+  MX_DMA_Init();
   MX_USART1_UART_Init();
   MX_LTDC_Init();
-  MX_QUADSPI_Init();
-  //MX_TIM7_Init();
-  //MX_DMA2D_Init();
-  MX_FMC_Init();
+  MX_TIM7_Init();
+  MX_DMA2D_Init();
+  //MX_FMC_Init();
+  MX_ADC1_Init();
+  MX_ADC3_Init();
   /* USER CODE BEGIN 2 */
 
+  // !!! @ATTENTION SDRAM AND LTDC HAVE TO BE INITIALIZED IN THIS WAY:!!!
+  BSP_SDRAM_Init();
+
 // LVGL initialization //
-	framebuffer = (uint16_t *)malloc(261120);
-	if(framebuffer == NULL)
-	printf("NULL POINTER");
 
 	lv_init();
 	lv_tick_set_cb(HAL_GetTick);
@@ -150,26 +156,6 @@ int main(void)
 	lv_display_set_buffers(display1, buf1, NULL, sizeof(buf1), LV_DISPLAY_RENDER_MODE_PARTIAL);
 	lv_display_set_flush_cb(display1, my_flush_cb);
 	ui_init();
-
-
-	//	uint8_t dataToWrite[] = {"jakis tam napis"};
-	//	uint8_t dataRead[BUFFERSIZE(dataToWrite)] = {0};
-	//	uint32_t writeAddress = 0x00000000;
-	//	uint32_t readAddress  = 0x00000000;
-	//	QSPI_WriteData(dataToWrite, BUFFERSIZE(dataToWrite), writeAddress);
-	//	QSPI_ReadData(dataRead, BUFFERSIZE(dataToWrite), readAddress);
-	//	printf("data: %s\n\r", dataRead);
-
-
-	//	QSPI_WriteData((uint8_t*)RGB565_480x272, sizeof(RGB565_480x272), 0x00000000);
-	//	uint8_t *image_buffer = (uint8_t*)malloc(sizeof(RGB565_480x272));
-	//	if(image_buffer == NULL)
-	//		printf("image_buffer is NULL ptr\n\r");
-	//
-	//	QSPI_ReadData(image_buffer, sizeof(RGB565_480x272), 0x00000000);
-	//	display_Simple_Update((uint32_t*)image_buffer);
-
-
 
 
   /* USER CODE END 2 */
@@ -181,6 +167,7 @@ int main(void)
 		//	  printf("...***...\n\r");
 		//	  HAL_GPIO_TogglePin(USER_LED_GPIO_Port, USER_LED_Pin);
 		//	  HAL_Delay(900);
+
 
 
 		HAL_Delay(10);
@@ -305,7 +292,6 @@ static void MPU_Config(void)
 /* USER CODE END 4 */
 
  /* MPU Configuration */
-
 
 
 /**
