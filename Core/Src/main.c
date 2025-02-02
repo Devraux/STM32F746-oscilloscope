@@ -87,7 +87,7 @@ void my_flush_cb(lv_display_t *display, const lv_area_t *area, uint8_t *px_map) 
 
     for (y = area->y1; y <= area->y2; y++) {
         for (x = area->x1; x <= area->x2; x++) {
-            BSP_SDRAM_WriteData(SDRAM_BANK_ADDR + (y * 240 + x) * sizeof(uint16_t), buf16, sizeof(uint16_t));
+            BSP_SDRAM_WriteData(SDRAM_BANK_ADDR + (y * 480 + x) * sizeof(uint16_t), buf16, sizeof(uint16_t));
             buf16++;
         }
     }
@@ -141,9 +141,6 @@ int main(void)
   /* USER CODE BEGIN 2 */
 
 // LVGL initialization //
-	framebuffer = (uint16_t *)malloc(261120);
-	if(framebuffer == NULL)
-		printf("NULL POINTER");
 
 	lv_init();
 	lv_tick_set_cb(HAL_GetTick);
