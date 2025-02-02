@@ -153,17 +153,6 @@ int main(void)
 	ui_init();
 
 
-	uint16_t data_to_write[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 0};
-	uint16_t read_data[sizeof(data_to_write)] = {0};
-	BSP_SDRAM_WriteData(0xC0000000, (uint16_t*)data_to_write, sizeof(data_to_write)/sizeof(data_to_write[0]));
-	BSP_SDRAM_ReadData(0xC0000000, (uint16_t*)read_data, sizeof(data_to_write)/sizeof(data_to_write[0]));
-
-	printf("hello world\n");
-	for(uint32_t i = 0; i < sizeof(data_to_write)/sizeof(data_to_write[0]); i++)
-		printf("%d\r\n", read_data[i]);
-
-	fflush(stdout);
-
   /* USER CODE END 2 */
 
   /* Infinite loop */
