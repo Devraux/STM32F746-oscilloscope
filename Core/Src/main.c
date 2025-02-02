@@ -85,9 +85,6 @@ void my_flush_cb(lv_display_t *display, const lv_area_t *area, uint8_t *px_map) 
     uint16_t *buf16 = (uint16_t *)px_map;
     int32_t x, y;
 
-
-    uint32_t sdram_address = SDRAM_BANK_ADDR;
-
     for (y = area->y1; y <= area->y2; y++) {
         for (x = area->x1; x <= area->x2; x++) {
             BSP_SDRAM_WriteData(SDRAM_BANK_ADDR + (y * 240 + x) * sizeof(uint16_t), buf16, sizeof(uint16_t));
