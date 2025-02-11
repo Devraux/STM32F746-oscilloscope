@@ -140,13 +140,14 @@ int main(void)
   MX_LTDC_Init();
   MX_TIM7_Init();
   MX_DMA2D_Init();
-  //MX_FMC_Init();
+  MX_FMC_Init();
+  BSP_SDRAM_Init();
   MX_ADC1_Init();
   MX_ADC3_Init();
   /* USER CODE BEGIN 2 */
 
   // !!! @ATTENTION SDRAM AND LTDC HAVE TO BE INITIALIZED IN THIS WAY:!!!
-  BSP_SDRAM_Init();
+  //BSP_SDRAM_Init();
 
 // LVGL initialization //
 
@@ -157,8 +158,9 @@ int main(void)
 	lv_display_set_flush_cb(display1, my_flush_cb);
 	ui_init();
 
+	uint32_t ADC_buffer = 0;
 
-  /* USER CODE END 2 */
+	/* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
@@ -168,6 +170,9 @@ int main(void)
 		//	  HAL_GPIO_TogglePin(USER_LED_GPIO_Port, USER_LED_Pin);
 		//	  HAL_Delay(900);
 
+		ADC_getCurrentValue(&ADC_buffer);
+		printf("ADC value: %ld\n\r", ADC_buffer);
+		HAL_Delay(200);
 
 
 		HAL_Delay(10);
@@ -292,7 +297,6 @@ static void MPU_Config(void)
 /* USER CODE END 4 */
 
  /* MPU Configuration */
-
 
 
 /**
