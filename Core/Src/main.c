@@ -30,7 +30,6 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "core_cm7.h"
-#include "example_RGB_Buffer.h"
 #include "lvgl.h"
 #include "ui.h"
 #include "STM32F746_Hardware_Lib/stm32746g_discovery_sdram.h"
@@ -98,9 +97,6 @@ void my_flush_cb(lv_display_t *display, const lv_area_t *area, uint8_t *px_map) 
     lv_display_flush_ready(display);
 }
 
-
-
-
 /* USER CODE END 0 */
 
 /**
@@ -146,11 +142,10 @@ int main(void)
   MX_ADC3_Init();
   /* USER CODE BEGIN 2 */
 
-  // !!! @ATTENTION SDRAM AND LTDC HAVE TO BE INITIALIZED IN THIS WAY:!!!
+  // !!! @ATTENTION SDRAM AND LTDC HAVE TO BE INITIALIZED IN THIS WAY:!!! -> (BSP_SDRAM_Init() before MX_ADC1/MX_ADC3 _Init)
   //BSP_SDRAM_Init();
 
 // LVGL initialization //
-
 	lv_init();
 	lv_tick_set_cb(HAL_GetTick);
 	lv_display_t *display1 = lv_display_create(RESOLUTION_HORIZONTAL, RESOLUTION_VERTICAL);
@@ -170,7 +165,7 @@ int main(void)
 		//	  HAL_GPIO_TogglePin(USER_LED_GPIO_Port, USER_LED_Pin);
 		//	  HAL_Delay(900);
 
-		ADC_getCurrentValue(&ADC_buffer);
+		ADC_getCurrentValue(&ADC_buffer); //ADC Circular mode and DMA test
 		printf("ADC value: %ld\n\r", ADC_buffer);
 		HAL_Delay(200);
 

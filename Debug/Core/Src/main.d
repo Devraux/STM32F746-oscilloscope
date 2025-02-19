@@ -41,9 +41,8 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
  ../Core/Inc/tim.h ../Core/Inc/usart.h ../Core/Inc/gpio.h \
  ../Core/Inc/fmc.h \
  ../Core/Src/lvgl/../STM32F746_Hardware_Lib/stm32746g_discovery_sdram.h \
- ../Core/Inc/example_RGB_Buffer.h ../Core/Src/lvgl/lvgl.h \
- ../Core/Src/lvgl/lv_version.h ../Core/Src/lvgl/src/lv_init.h \
- ../Core/Src/lvgl/src/lv_conf_internal.h \
+ ../Core/Src/lvgl/lvgl.h ../Core/Src/lvgl/lv_version.h \
+ ../Core/Src/lvgl/src/lv_init.h ../Core/Src/lvgl/src/lv_conf_internal.h \
  ../Core/Src/lvgl/src/lv_conf_kconfig.h ../Core/Src/lvgl/lv_conf.h \
  ../Core/Src/lvgl/src/misc/lv_types.h \
  ../Core/Src/lvgl/src/misc/../lv_conf_internal.h \
@@ -488,7 +487,6 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
 ../Core/Inc/gpio.h:
 ../Core/Inc/fmc.h:
 ../Core/Src/lvgl/../STM32F746_Hardware_Lib/stm32746g_discovery_sdram.h:
-../Core/Inc/example_RGB_Buffer.h:
 ../Core/Src/lvgl/lvgl.h:
 ../Core/Src/lvgl/lv_version.h:
 ../Core/Src/lvgl/src/lv_init.h:

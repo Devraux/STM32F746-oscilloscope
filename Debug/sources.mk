@@ -251,12 +251,6 @@ Core/Src/lvgl/tests/src/test_cases/widgets \
 Core/Src/lvgl/tests/src/test_cases/xml \
 Core/Src/lvgl/tests/src/test_libs/rnd_unicodes \
 Core/Src/lvgl/tests/src/test_libs/rnd_unicodes/rnd_unicodes/src \
-Core/Src/lvgl/tests/test_images/stride_align1/LZ4 \
-Core/Src/lvgl/tests/test_images/stride_align1/RLE \
-Core/Src/lvgl/tests/test_images/stride_align1/UNCOMPRESSED \
-Core/Src/lvgl/tests/test_images/stride_align64/LZ4 \
-Core/Src/lvgl/tests/test_images/stride_align64/RLE \
-Core/Src/lvgl/tests/test_images/stride_align64/UNCOMPRESSED \
 Core/Src/lvgl/tests/unity \
 Core/Src/ui \
 Core/Startup \

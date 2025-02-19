@@ -96,7 +96,7 @@ void MX_ADC3_Init(void)
   hadc3.Instance = ADC3;
   hadc3.Init.ClockPrescaler = ADC_CLOCK_SYNC_PCLK_DIV4;
   hadc3.Init.Resolution = ADC_RESOLUTION_12B;
-  hadc3.Init.ScanConvMode = ADC_SCAN_DISABLE;
+  hadc3.Init.ScanConvMode = ADC_SCAN_ENABLE;
   hadc3.Init.ContinuousConvMode = ENABLE;
   hadc3.Init.DiscontinuousConvMode = DISABLE;
   hadc3.Init.ExternalTrigConvEdge = ADC_EXTERNALTRIGCONVEDGE_NONE;
@@ -114,7 +114,7 @@ void MX_ADC3_Init(void)
   */
   sConfig.Channel = ADC_CHANNEL_8;
   sConfig.Rank = ADC_REGULAR_RANK_1;
-  sConfig.SamplingTime = ADC_SAMPLETIME_144CYCLES;
+  sConfig.SamplingTime = ADC_SAMPLETIME_480CYCLES;
   if (HAL_ADC_ConfigChannel(&hadc3, &sConfig) != HAL_OK)
   {
     Error_Handler();
