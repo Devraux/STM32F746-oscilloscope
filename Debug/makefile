@@ -11,6 +11,7 @@ RM := rm -rf
 -include sources.mk
 -include display_lib/subdir.mk
 -include Drivers/STM32F7xx_HAL_Driver/Src/subdir.mk
+-include Data_Buffer/subdir.mk
 -include Core/Startup/subdir.mk
 -include Core/Src/ui/subdir.mk
 -include Core/Src/lvgl/tests/unity/subdir.mk

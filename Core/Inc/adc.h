@@ -30,6 +30,8 @@ extern "C" {
 
 /* USER CODE BEGIN Includes */
 
+#include "../../Data_Buffer/Data_Buffer.h"
+
 /* USER CODE END Includes */
 
 extern ADC_HandleTypeDef hadc1;

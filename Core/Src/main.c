@@ -29,11 +29,6 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "core_cm7.h"
-#include "lvgl.h"
-#include "ui.h"
-#include "STM32F746_Hardware_Lib/stm32746g_discovery_sdram.h"
-
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -55,10 +50,6 @@
 
 /* USER CODE BEGIN PV */
 
-uint8_t buf1[RESOLUTION_HORIZONTAL * RESOLUTION_VERTICAL / 10 * BYTES_PER_PIXEL];
-uint16_t *framebuffer;
-
-uint32_t my_ltdc_layer_index = 0; /* typically 0 or 1 */
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -82,20 +73,6 @@ void CPU_CACHE_Enable(void)
   SCB_EnableDCache();
 }
 
-void my_flush_cb(lv_display_t *display, const lv_area_t *area, uint8_t *px_map) {
-    uint16_t *buf16 = (uint16_t *)px_map;
-    int32_t x, y;
-
-    for (y = area->y1; y <= area->y2; y++) {
-        for (x = area->x1; x <= area->x2; x++) {
-            BSP_SDRAM_WriteData(SDRAM_BANK_ADDR + (y * 480 + x) * sizeof(uint16_t), buf16, sizeof(uint16_t));
-            buf16++;
-        }
-    }
-
-    display_Simple_Update(SDRAM_BANK_ADDR);
-    lv_display_flush_ready(display);
-}
 
 /* USER CODE END 0 */
 
@@ -140,22 +117,17 @@ int main(void)
   BSP_SDRAM_Init();
   MX_ADC1_Init();
   MX_ADC3_Init();
+
   /* USER CODE BEGIN 2 */
+  display_init();
+
 
   // !!! @ATTENTION SDRAM AND LTDC HAVE TO BE INITIALIZED IN THIS WAY:!!! -> (BSP_SDRAM_Init() before MX_ADC1/MX_ADC3 _Init)
   //BSP_SDRAM_Init();
 
-// LVGL initialization //
-	lv_init();
-	lv_tick_set_cb(HAL_GetTick);
-	lv_display_t *display1 = lv_display_create(RESOLUTION_HORIZONTAL, RESOLUTION_VERTICAL);
-	lv_display_set_buffers(display1, buf1, NULL, sizeof(buf1), LV_DISPLAY_RENDER_MODE_PARTIAL);
-	lv_display_set_flush_cb(display1, my_flush_cb);
-	ui_init();
-
 	uint32_t ADC_buffer = 0;
 
-	/* USER CODE END 2 */
+  /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */

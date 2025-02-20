@@ -32,6 +32,8 @@ extern "C" {
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include <stdbool.h>
+#include "../../display_lib/display.h"
+
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
@@ -61,9 +63,6 @@ void Error_Handler(void);
 #define USER_LED_GPIO_Port GPIOI
 
 /* USER CODE BEGIN Private defines */
-#define RESOLUTION_HORIZONTAL 480
-#define RESOLUTION_VERTICAL 272
-#define BYTES_PER_PIXEL (LV_COLOR_FORMAT_GET_SIZE(LV_COLOR_FORMAT_RGB565))
 
 /* USER CODE END Private defines */
 

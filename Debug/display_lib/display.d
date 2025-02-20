@@ -36,8 +36,9 @@ display_lib/display.o: ../display_lib/display.c ../display_lib/display.h \
  ../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_tim_ex.h \
  ../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_uart.h \
  ../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_uart_ex.h \
- ../Core/Src/lvgl/lvgl.h ../Core/Src/lvgl/lv_version.h \
- ../Core/Src/lvgl/src/lv_init.h ../Core/Src/lvgl/src/lv_conf_internal.h \
+ ../Core/Inc/../../display_lib/display.h ../Core/Src/lvgl/lvgl.h \
+ ../Core/Src/lvgl/lv_version.h ../Core/Src/lvgl/src/lv_init.h \
+ ../Core/Src/lvgl/src/lv_conf_internal.h \
  ../Core/Src/lvgl/src/lv_conf_kconfig.h ../Core/Src/lvgl/lv_conf.h \
  ../Core/Src/lvgl/src/misc/lv_types.h \
  ../Core/Src/lvgl/src/misc/../lv_conf_internal.h \
@@ -430,7 +431,11 @@ display_lib/display.o: ../display_lib/display.c ../display_lib/display.h \
  ../Core/Src/lvgl/src/drivers/wayland/../../indev/lv_indev_gesture.h \
  ../Core/Src/lvgl/src/lv_api_map_v8.h \
  ../Core/Src/lvgl/src/lv_api_map_v9_0.h \
- ../Core/Src/lvgl/src/lv_api_map_v9_1.h
+ ../Core/Src/lvgl/src/lv_api_map_v9_1.h ../Core/Src/ui/ui.h \
+ ../Core/Src/ui/screens.h \
+ ../Core/Src/lvgl/../STM32F746_Hardware_Lib/stm32746g_discovery_sdram.h \
+ ../Core/Inc/../Inc/ltdc.h ../Core/Inc/../Inc/main.h \
+ ../Core/Inc/../Inc/tim.h
 ../display_lib/display.h:
 ../Core/Inc/main.h:
 ../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal.h:
@@ -470,6 +475,7 @@ display_lib/display.o: ../display_lib/display.c ../display_lib/display.h \
 ../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_tim_ex.h:
 ../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_uart.h:
 ../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_uart_ex.h:
+../Core/Inc/../../display_lib/display.h:
 ../Core/Src/lvgl/lvgl.h:
 ../Core/Src/lvgl/lv_version.h:
 ../Core/Src/lvgl/src/lv_init.h:
@@ -874,3 +880,9 @@ display_lib/display.o: ../display_lib/display.c ../display_lib/display.h \
 ../Core/Src/lvgl/src/lv_api_map_v8.h:
 ../Core/Src/lvgl/src/lv_api_map_v9_0.h:
 ../Core/Src/lvgl/src/lv_api_map_v9_1.h:
+../Core/Src/ui/ui.h:
+../Core/Src/ui/screens.h:
+../Core/Src/lvgl/../STM32F746_Hardware_Lib/stm32746g_discovery_sdram.h:
+../Core/Inc/../Inc/ltdc.h:
+../Core/Inc/../Inc/main.h:
+../Core/Inc/../Inc/tim.h:

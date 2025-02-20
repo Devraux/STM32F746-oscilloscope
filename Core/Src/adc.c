@@ -21,7 +21,8 @@
 #include "adc.h"
 
 /* USER CODE BEGIN 0 */
-uint32_t ADC_currentValue = 0; //@TODO change DMA VALUE read mode to array read mode
+static uint32_t ADC_currentValue = 0;
+static dataBuffer dataBuffer_t;
 
 /* USER CODE END 0 */
 
@@ -123,6 +124,7 @@ void MX_ADC3_Init(void)
 
   // ADC DMA START MEASUREMENTS
   HAL_ADC_Start_DMA(&hadc3, &ADC_currentValue, 1);
+
 
 
   /* USER CODE END ADC3_Init 2 */

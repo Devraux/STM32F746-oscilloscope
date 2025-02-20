@@ -20,6 +20,23 @@
 
 #include "main.h"
 #include "lvgl.h"
+#include "core_cm7.h"
+#include "lvgl.h"
+#include "ui.h"
+#include "../STM32F746_Hardware_Lib/stm32746g_discovery_sdram.h"
+#include "../Inc/ltdc.h"
+
+#define RESOLUTION_HORIZONTAL 480
+#define RESOLUTION_VERTICAL 272
+#define BYTES_PER_PIXEL (LV_COLOR_FORMAT_GET_SIZE(LV_COLOR_FORMAT_RGB565))
+
+void lv_example_get_started_2(void);
+
+/// display initialization
+void display_init(void);
+
+/// my flush call back
+void my_flush_cb(lv_display_t *display, const lv_area_t *area, uint8_t *px_map);
 
 ///  Widget description: Plot current and past input signal sample's measured by ADC3.
 ///

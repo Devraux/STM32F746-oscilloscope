@@ -254,6 +254,7 @@ Core/Src/lvgl/tests/src/test_libs/rnd_unicodes/rnd_unicodes/src \
 Core/Src/lvgl/tests/unity \
 Core/Src/ui \
 Core/Startup \
+Data_Buffer \
 Drivers/STM32F7xx_HAL_Driver/Src \
 display_lib \
 
