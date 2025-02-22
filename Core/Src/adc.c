@@ -23,6 +23,7 @@
 /* USER CODE BEGIN 0 */
 static uint32_t ADC_currentValue = 0;
 static dataBuffer dataBuffer_t;
+static uint32_t *dataBufferData;
 
 /* USER CODE END 0 */
 
@@ -121,6 +122,10 @@ void MX_ADC3_Init(void)
     Error_Handler();
   }
   /* USER CODE BEGIN ADC3_Init 2 */
+
+  // Data buffer Initialization
+  dataBufferData = (uint32_t*)malloc(ADC_byteDataBufferSize);//buffer 5 times bigger than available screen size(272px x 480 px) -> 480px*5=2400
+  data_bufferInit(&dataBuffer_t, &ADC_currentValue, ADC_dataBufferSize);
 
   // ADC DMA START MEASUREMENTS
   HAL_ADC_Start_DMA(&hadc3, &ADC_currentValue, 1);

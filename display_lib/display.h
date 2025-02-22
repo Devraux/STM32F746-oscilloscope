@@ -64,7 +64,7 @@ void display_buttonsWindow(void);
 ///						- "TIME/DIV"                  label
 /// 					- "X_Coordinate Cursor_1 | 2" label
 /// 					- "Y_Coordinate Cursor_1 | 2" label
-void display_bottomWindow(void);
+void display_bottomBarWindow(void);
 
 
 ///  Widget description: top bar additional informations
@@ -72,6 +72,7 @@ void display_bottomWindow(void);
 ///  Displayed features:
 /// 					- Time     label
 ///						- "Status" label
-void display_topWindow(void);
+///	Due to small screen size topBarWindow is not used. Some data from Top bar were moved to bottom bar
+///void display_topBarWindow(void);
 
 #endif

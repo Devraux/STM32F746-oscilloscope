@@ -39,7 +39,8 @@ extern ADC_HandleTypeDef hadc1;
 extern ADC_HandleTypeDef hadc3;
 
 /* USER CODE BEGIN Private defines */
-
+#define ADC_byteDataBufferSize 2400 * sizeof(uint32_t)
+#define ADC_dataBufferSize 2400
 /* USER CODE END Private defines */
 
 void MX_ADC1_Init(void);
