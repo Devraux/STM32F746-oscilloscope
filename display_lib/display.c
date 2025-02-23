@@ -4,6 +4,21 @@
 /// Private variables ///
 uint8_t buf1[RESOLUTION_HORIZONTAL * RESOLUTION_VERTICAL / 10 * BYTES_PER_PIXEL];
 uint16_t *framebuffer;
+
+////////////////////// Right side buttons local objects/////////////////
+static lv_obj_t *label_stopRun;
+static lv_obj_t *label_Cursor;
+static lv_obj_t *label_DC_ACCoupling;
+static lv_obj_t *label_mathFun;
+static lv_obj_t *label_options;
+////////////////////////////////////////////////////////////////////////
+
+////////////////////// Bottom bar local objects ////////////////////////
+static lv_obj_t *voltsDiv;
+static lv_obj_t *timeDiv;
+static lv_obj_t *time;
+////////////////////////////////////////////////////////////////////////
+
 // uint32_t my_ltdc_layer_index = 0; /* typically 0 or 1 */
 
 
@@ -36,6 +51,7 @@ void display_init(void)
 	//Display tool bars and chart template initialization
 	display_bottomBarWindow();
 	display_buttonsWindow();
+	display_chartWindow();
 
 }
 
@@ -44,13 +60,13 @@ void display_buttonsWindow(void)
 
 	//////////////////////////// Stop/Run /////////////////////////////////////
 	lv_obj_t *btn_stopRun = lv_button_create(lv_screen_active());
-	lv_obj_set_size(btn_stopRun, 100, 40);
-	lv_obj_align(btn_stopRun, LV_ALIGN_TOP_RIGHT, -5, 5);
+	lv_obj_set_size(btn_stopRun, 100, 48);
+	lv_obj_align(btn_stopRun, LV_ALIGN_TOP_RIGHT, 0, 0);
 	lv_obj_set_style_bg_color(btn_stopRun, lv_color_hex(0x1b39c6), LV_PART_MAIN);
 	lv_obj_set_style_radius(btn_stopRun, 2, LV_PART_MAIN);
 
 
-	lv_obj_t *label_stopRun = lv_label_create(btn_stopRun);
+	label_stopRun = lv_label_create(btn_stopRun);
 	lv_label_set_text(label_stopRun, "Stop/Run");
 	lv_obj_center(label_stopRun);
 	lv_obj_set_style_text_color(label_stopRun, lv_color_hex(0xd6e32b), LV_PART_MAIN);
@@ -59,12 +75,12 @@ void display_buttonsWindow(void)
 
 	//////////////////////////// Place X/Y Cursor 1 | 2 ///////////////////////
 	lv_obj_t *btn_Cursor = lv_button_create(lv_screen_active());
-	lv_obj_set_size(btn_Cursor, 100, 40);
-	lv_obj_align(btn_Cursor, LV_ALIGN_TOP_RIGHT,-5, 50);
+	lv_obj_set_size(btn_Cursor, 100, 48);
+	lv_obj_align(btn_Cursor, LV_ALIGN_TOP_RIGHT,0 ,50);
 	lv_obj_set_style_bg_color(btn_Cursor, lv_color_hex(0x1b39c6), LV_PART_MAIN);
 	lv_obj_set_style_radius(btn_Cursor, 2, LV_PART_MAIN);
 
-	lv_obj_t *label_Cursor = lv_label_create(btn_Cursor);
+	label_Cursor = lv_label_create(btn_Cursor);
 	lv_label_set_text(label_Cursor, "Cursor");
 	lv_obj_center(label_Cursor);
 	lv_obj_set_style_text_color(label_Cursor, lv_color_hex(0xd6e32b), LV_PART_MAIN);
@@ -72,12 +88,12 @@ void display_buttonsWindow(void)
 
 	//////////////////////////// DC/AC Coupling ///////////////////////////////
 	lv_obj_t *btn_DC_ACCoupling = lv_button_create(lv_screen_active());
-	lv_obj_set_size(btn_DC_ACCoupling, 100, 40);
-	lv_obj_align(btn_DC_ACCoupling, LV_ALIGN_TOP_RIGHT, -5, 95);
+	lv_obj_set_size(btn_DC_ACCoupling, 100, 48);
+	lv_obj_align(btn_DC_ACCoupling, LV_ALIGN_TOP_RIGHT, 0, 100);
 	lv_obj_set_style_bg_color(btn_DC_ACCoupling, lv_color_hex(0x1b39c6), LV_PART_MAIN);
 	lv_obj_set_style_radius(btn_DC_ACCoupling, 2, LV_PART_MAIN);
 
-	lv_obj_t *label_DC_ACCoupling = lv_label_create(btn_DC_ACCoupling);
+	label_DC_ACCoupling = lv_label_create(btn_DC_ACCoupling);
 	lv_label_set_text(label_DC_ACCoupling, "DC/AC");
 	lv_obj_center(label_DC_ACCoupling);
 	lv_obj_set_style_text_color(label_DC_ACCoupling, lv_color_hex(0xd6e32b), LV_PART_MAIN);
@@ -85,12 +101,12 @@ void display_buttonsWindow(void)
 
 	//////////////////////////// Math functions ///////////////////////////////
 	lv_obj_t *btn_mathFun = lv_button_create(lv_screen_active());
-	lv_obj_set_size(btn_mathFun, 100, 40);
-	lv_obj_align(btn_mathFun, LV_ALIGN_TOP_RIGHT, -5, 140);
+	lv_obj_set_size(btn_mathFun, 100, 48);
+	lv_obj_align(btn_mathFun, LV_ALIGN_TOP_RIGHT, 0, 150);
 	lv_obj_set_style_bg_color(btn_mathFun, lv_color_hex(0x1b39c6), LV_PART_MAIN);
 	lv_obj_set_style_radius(btn_mathFun, 2, LV_PART_MAIN);
 
-	lv_obj_t *label_mathFun = lv_label_create(btn_mathFun);
+	label_mathFun = lv_label_create(btn_mathFun);
 	lv_label_set_text(label_mathFun, "Math");
 	lv_obj_center(label_mathFun);
 	lv_obj_set_style_text_color(label_mathFun, lv_color_hex(0xd6e32b), LV_PART_MAIN);
@@ -98,12 +114,12 @@ void display_buttonsWindow(void)
 
 	//////////////////////////// More options /////////////////////////////////
 	lv_obj_t *btn_options = lv_button_create(lv_screen_active());
-	lv_obj_set_size(btn_options, 100, 40);
-	lv_obj_align(btn_options, LV_ALIGN_TOP_RIGHT, -5, 185);
+	lv_obj_set_size(btn_options, 100, 48);
+	lv_obj_align(btn_options, LV_ALIGN_TOP_RIGHT, 0, 200);
 	lv_obj_set_style_bg_color(btn_options, lv_color_hex(0x1b39c6), LV_PART_MAIN);
 	lv_obj_set_style_radius(btn_options, 2, LV_PART_MAIN);
 
-	lv_obj_t *label_options = lv_label_create(btn_options);
+	label_options = lv_label_create(btn_options);
 	lv_label_set_text(label_options, "Options");
 	lv_obj_center(label_options);
 	lv_obj_set_style_text_color(label_options, lv_color_hex(0xd6e32b), LV_PART_MAIN);
@@ -113,7 +129,7 @@ void display_buttonsWindow(void)
 void display_bottomBarWindow(void)
 {
 	lv_obj_t *bottom_bar = lv_obj_create(lv_scr_act());
-	lv_obj_set_size(bottom_bar, 480, 40);
+	lv_obj_set_size(bottom_bar, 480, 22);
 	lv_obj_align(bottom_bar, LV_ALIGN_BOTTOM_MID, 0, 0);
 	lv_obj_set_style_bg_color(bottom_bar, lv_color_hex(0x1b39c6), LV_PART_MAIN);
 	lv_obj_clear_flag(bottom_bar, LV_OBJ_FLAG_SCROLLABLE);
@@ -122,17 +138,17 @@ void display_bottomBarWindow(void)
 
 
 
-	lv_obj_t *voltsDiv = lv_label_create(bottom_bar);
+	voltsDiv = lv_label_create(bottom_bar);
 	lv_label_set_text(voltsDiv, "V/Div:");
 	lv_obj_align(voltsDiv, LV_ALIGN_LEFT_MID, 0, 0);
 	lv_obj_set_style_text_color(voltsDiv, lv_color_hex(0xd6e32b), LV_PART_MAIN);
 
-	lv_obj_t *timeDiv = lv_label_create(bottom_bar);
+	timeDiv = lv_label_create(bottom_bar);
 	lv_label_set_text(timeDiv, "s/Div:");
 	lv_obj_align(timeDiv, LV_ALIGN_LEFT_MID, 80, 0);
 	lv_obj_set_style_text_color(timeDiv, lv_color_hex(0xd6e32b), LV_PART_MAIN);
 
-	lv_obj_t *time = lv_label_create(bottom_bar);
+	time = lv_label_create(bottom_bar);
 	lv_label_set_text(time, "Time: 12:00");
 	lv_obj_align(time, LV_ALIGN_LEFT_MID, 370, 0);
 	lv_obj_set_style_text_color(time, lv_color_hex(0xd6e32b), LV_PART_MAIN);
@@ -140,5 +156,20 @@ void display_bottomBarWindow(void)
 
 void display_chartWindow(void)
 {
+	lv_obj_t * chart;
+	chart = lv_chart_create(lv_screen_active());
+	lv_obj_set_size(chart, 380, 250);
+	lv_obj_align(chart, LV_ALIGN_TOP_LEFT, 0, 0);
+	lv_chart_set_type(chart, LV_CHART_TYPE_LINE);
+	lv_obj_set_style_radius(chart, 2, LV_PART_MAIN);
+	lv_obj_set_style_bg_color(chart, lv_color_hex(0x0d0d0c), LV_PART_MAIN);
+	//lv_obj_set_style_border_color(chart, lv_color_hex(0x1b39c6), LV_PART_MAIN);
+	//lv_obj_set_style_border_width(chart, 2, LV_PART_MAIN);
 
+	lv_chart_series_t * ser1 = lv_chart_add_series(chart, lv_palette_main(LV_PALETTE_GREEN), LV_CHART_AXIS_PRIMARY_Y);
+
+	for(uint32_t i = 0; i < 10; i++)
+		lv_chart_set_next_value(chart, ser1, lv_rand(10, 50));
+
+	lv_chart_refresh(chart); /*Required after direct set*/
 }

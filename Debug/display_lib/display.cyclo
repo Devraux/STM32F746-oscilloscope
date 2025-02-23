@@ -1,4 +1,5 @@
-../display_lib/display.c:10:6:my_flush_cb	3
-../display_lib/display.c:25:6:display_init	1
-../display_lib/display.c:43:6:display_buttonsWindow	1
-../display_lib/display.c:114:6:display_bottomBarWindow	1
+../display_lib/display.c:25:6:my_flush_cb	3
+../display_lib/display.c:40:6:display_init	1
+../display_lib/display.c:58:6:display_buttonsWindow	1
+../display_lib/display.c:129:6:display_bottomBarWindow	1
+../display_lib/display.c:157:6:display_chartWindow	2
