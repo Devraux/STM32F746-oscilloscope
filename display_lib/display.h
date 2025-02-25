@@ -24,6 +24,7 @@
 #include "lvgl.h"
 #include "ui.h"
 #include "../STM32F746_Hardware_Lib/stm32746g_discovery_sdram.h"
+#include "../Core/Inc/adc.h"
 #include "../Inc/ltdc.h"
 
 #define RESOLUTION_HORIZONTAL 480
@@ -76,5 +77,6 @@ void display_bottomBarWindow(void);
 ///void display_topBarWindow(void);
 
 
-void display_getFPS(void);
+void update_chart(lv_timer_t *timer);
+
 #endif

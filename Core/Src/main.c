@@ -125,7 +125,7 @@ int main(void)
   // !!! @ATTENTION SDRAM AND LTDC HAVE TO BE INITIALIZED IN THIS WAY:!!! -> (BSP_SDRAM_Init() before MX_ADC1/MX_ADC3 _Init)
   //BSP_SDRAM_Init();
 
-	uint32_t ADC_buffer = 0;
+	//uint32_t ADC_buffer = 0;
 
   /* USER CODE END 2 */
 
@@ -137,12 +137,12 @@ int main(void)
 		//	  HAL_GPIO_TogglePin(USER_LED_GPIO_Port, USER_LED_Pin);
 		//	  HAL_Delay(900);
 
-		ADC_getCurrentValue(&ADC_buffer); //ADC Circular mode and DMA test
-		printf("ADC value: %ld\n\r", ADC_buffer);
-		HAL_Delay(200);
+		//ADC_getCurrentValue(&ADC_buffer); //ADC Circular mode and DMA test
+		//printf("ADC value: %ld\n\r", ADC_buffer);
+		//HAL_Delay(200);
 
 
-		HAL_Delay(10);
+		HAL_Delay(50);
 		lv_task_handler();
 
     /* USER CODE END WHILE */

@@ -2,4 +2,4 @@
 ../Core/Src/adc.c:83:6:MX_ADC3_Init	24	static
 ../Core/Src/adc.c:139:6:HAL_ADC_MspInit	48	static
 ../Core/Src/adc.c:203:6:HAL_ADC_MspDeInit	16	static
-../Core/Src/adc.c:259:6:ADC_getCurrentValue	16	static
+../Core/Src/adc.c:259:11:ADC_getDataPtr	4	static

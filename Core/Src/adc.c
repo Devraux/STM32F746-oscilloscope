@@ -21,9 +21,9 @@
 #include "adc.h"
 
 /* USER CODE BEGIN 0 */
-static uint32_t ADC_currentValue = 0;
-static dataBuffer dataBuffer_t;
-static uint32_t *dataBufferData;
+static uint32_t *ADC_valueArr = NULL;
+//static dataBuffer dataBuffer_t;
+//static uint32_t *dataBufferData;
 
 /* USER CODE END 0 */
 
@@ -124,11 +124,11 @@ void MX_ADC3_Init(void)
   /* USER CODE BEGIN ADC3_Init 2 */
 
   // Data buffer Initialization
-  dataBufferData = (uint32_t*)malloc(ADC_byteDataBufferSize);//buffer 5 times bigger than available screen size(272px x 480 px) -> 480px*5=2400
-  data_bufferInit(&dataBuffer_t, &ADC_currentValue, ADC_dataBufferSize);
+  ADC_valueArr = (uint32_t*)malloc(ADC_byteDataBufferSize);//buffer 5 times bigger than available screen size(272px x 480 px) -> 480px*5=2400
+  //data_bufferInit(&dataBuffer_t, ADC_currentValueArr, ADC_dataBufferSize);
 
   // ADC DMA START MEASUREMENTS
-  // HAL_ADC_Start_DMA(&hadc3, &ADC_currentValue, 1);
+  HAL_ADC_Start_DMA(&hadc3, ADC_valueArr, ADC_dataBufferSize);
 
 
 
@@ -256,8 +256,8 @@ void HAL_ADC_MspDeInit(ADC_HandleTypeDef* adcHandle)
 }
 
 /* USER CODE BEGIN 1 */
-void ADC_getCurrentValue(uint32_t *buffer)
+uint32_t *ADC_getDataPtr(void)
 {
-	*buffer = ADC_currentValue;
+	return ADC_valueArr;
 }
 /* USER CODE END 1 */

@@ -47,7 +47,7 @@ void MX_ADC1_Init(void);
 void MX_ADC3_Init(void);
 
 /* USER CODE BEGIN Prototypes */
-void ADC_getCurrentValue(uint32_t *buffer);
+uint32_t *ADC_getDataPtr(void);
 
 /* USER CODE END Prototypes */
 

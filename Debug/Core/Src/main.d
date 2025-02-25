@@ -434,11 +434,14 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
  ../Core/Src/lvgl/src/lv_api_map_v9_1.h ../Core/Src/ui/ui.h \
  ../Core/Src/ui/screens.h \
  ../Core/Src/lvgl/../STM32F746_Hardware_Lib/stm32746g_discovery_sdram.h \
+ ../Core/Inc/../../display_lib/../Core/Inc/adc.h \
+ ../Core/Inc/../../display_lib/../Core/Inc/main.h \
+ ../Core/Inc/../../display_lib/../Core/Inc/../../Data_Buffer/Data_Buffer.h \
  ../Core/Inc/../Inc/ltdc.h ../Core/Inc/../Inc/main.h \
- ../Core/Inc/../Inc/tim.h ../Core/Inc/adc.h ../Core/Inc/main.h \
- ../Core/Inc/../../Data_Buffer/Data_Buffer.h ../Core/Inc/dma.h \
- ../Core/Inc/dma2d.h ../Core/Inc/ltdc.h ../Core/Inc/tim.h \
- ../Core/Inc/usart.h ../Core/Inc/gpio.h ../Core/Inc/fmc.h
+ ../Core/Inc/../Inc/tim.h ../Core/Inc/adc.h ../Core/Inc/dma.h \
+ ../Core/Inc/main.h ../Core/Inc/dma2d.h ../Core/Inc/ltdc.h \
+ ../Core/Inc/tim.h ../Core/Inc/usart.h ../Core/Inc/gpio.h \
+ ../Core/Inc/fmc.h
 ../Core/Inc/main.h:
 ../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal.h:
 ../Core/Inc/stm32f7xx_hal_conf.h:
@@ -885,13 +888,15 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
 ../Core/Src/ui/ui.h:
 ../Core/Src/ui/screens.h:
 ../Core/Src/lvgl/../STM32F746_Hardware_Lib/stm32746g_discovery_sdram.h:
+../Core/Inc/../../display_lib/../Core/Inc/adc.h:
+../Core/Inc/../../display_lib/../Core/Inc/main.h:
+../Core/Inc/../../display_lib/../Core/Inc/../../Data_Buffer/Data_Buffer.h:
 ../Core/Inc/../Inc/ltdc.h:
 ../Core/Inc/../Inc/main.h:
 ../Core/Inc/../Inc/tim.h:
 ../Core/Inc/adc.h:
-../Core/Inc/main.h:
-../Core/Inc/../../Data_Buffer/Data_Buffer.h:
 ../Core/Inc/dma.h:
+../Core/Inc/main.h:
 ../Core/Inc/dma2d.h:
 ../Core/Inc/ltdc.h:
 ../Core/Inc/tim.h:

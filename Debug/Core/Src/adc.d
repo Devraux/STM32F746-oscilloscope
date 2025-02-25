@@ -434,6 +434,7 @@ Core/Src/adc.o: ../Core/Src/adc.c ../Core/Inc/adc.h ../Core/Inc/main.h \
  ../Core/Src/lvgl/src/lv_api_map_v9_1.h ../Core/Src/ui/ui.h \
  ../Core/Src/ui/screens.h \
  ../Core/Src/lvgl/../STM32F746_Hardware_Lib/stm32746g_discovery_sdram.h \
+ ../Core/Inc/../../display_lib/../Core/Inc/adc.h \
  ../Core/Inc/../Inc/ltdc.h ../Core/Inc/../Inc/main.h \
  ../Core/Inc/../Inc/tim.h ../Core/Inc/../../Data_Buffer/Data_Buffer.h
 ../Core/Inc/adc.h:
@@ -884,6 +885,7 @@ Core/Src/adc.o: ../Core/Src/adc.c ../Core/Inc/adc.h ../Core/Inc/main.h \
 ../Core/Src/ui/ui.h:
 ../Core/Src/ui/screens.h:
 ../Core/Src/lvgl/../STM32F746_Hardware_Lib/stm32746g_discovery_sdram.h:
+../Core/Inc/../../display_lib/../Core/Inc/adc.h:
 ../Core/Inc/../Inc/ltdc.h:
 ../Core/Inc/../Inc/main.h:
 ../Core/Inc/../Inc/tim.h:

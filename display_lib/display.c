@@ -19,6 +19,10 @@ static lv_obj_t *timeDiv;
 static lv_obj_t *time;
 ////////////////////////////////////////////////////////////////////////
 
+////////////////////// Data display local objects //////////////////////
+static lv_obj_t * chart;
+////////////////////////////////////////////////////////////////////////
+
 // uint32_t my_ltdc_layer_index = 0; /* typically 0 or 1 */
 
 
@@ -156,7 +160,6 @@ void display_bottomBarWindow(void)
 
 void display_chartWindow(void)
 {
-	lv_obj_t * chart;
 	chart = lv_chart_create(lv_screen_active());
 	lv_obj_set_size(chart, 380, 250);
 	lv_obj_align(chart, LV_ALIGN_TOP_LEFT, 0, 0);
@@ -165,12 +168,27 @@ void display_chartWindow(void)
 	lv_obj_set_style_border_color(chart, lv_color_hex(0x1b39c6), LV_PART_MAIN);
 	lv_obj_set_style_border_width(chart, 1, LV_PART_MAIN);
 	lv_chart_set_div_line_count(chart, 5, 5);
+    //lv_chart_set_axis_tick(chart, LV_CHART_AXIS_PRIMARY_Y, 10, 5, 6, 2, true);
+    //lv_chart_set_axis_tick(chart, LV_CHART_AXIS_PRIMARY_X, 10, 5, 6, 2, true);
 
-	lv_chart_series_t * ser1 = lv_chart_add_series(chart, lv_palette_main(LV_PALETTE_GREEN), LV_CHART_AXIS_PRIMARY_Y);
 
-	for(uint32_t i = 0; i < 10; i++)
-		lv_chart_set_next_value(chart, ser1, lv_rand(10, 50));
+	uint32_t *ADC_dataPtr = ADC_getDataPtr();
+
+	lv_chart_series_t *ser = lv_chart_add_series(chart, lv_palette_main(LV_PALETTE_RED), LV_CHART_AXIS_PRIMARY_Y);
+	lv_chart_set_range(chart, LV_CHART_AXIS_PRIMARY_Y, 0, 3000);
+    lv_chart_set_point_count(chart, 480);
+    lv_chart_set_ext_y_array(chart, ser, (int32_t*)ADC_dataPtr);
+    lv_timer_create(update_chart, 100, NULL);
+
+
+
+//	lv_chart_series_t * ser1 = lv_chart_add_series(chart, lv_palette_main(LV_PALETTE_GREEN), LV_CHART_AXIS_PRIMARY_Y);
+//	for(uint32_t i = 0; i < 10; i++)
+//		lv_chart_set_next_value(chart, ser1, lv_rand(10, 50));
 
 	lv_chart_refresh(chart); /*Required after direct set*/
 }
 
+void update_chart(lv_timer_t *timer) {
+    lv_chart_refresh(chart);
+}

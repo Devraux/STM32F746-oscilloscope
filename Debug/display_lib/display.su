@@ -1,5 +1,6 @@
-../display_lib/display.c:25:6:my_flush_cb	40	static
-../display_lib/display.c:40:6:display_init	32	static
-../display_lib/display.c:58:6:display_buttonsWindow	80	static
-../display_lib/display.c:129:6:display_bottomBarWindow	40	static
-../display_lib/display.c:157:6:display_chartWindow	48	static
+../display_lib/display.c:29:6:my_flush_cb	40	static
+../display_lib/display.c:44:6:display_init	32	static
+../display_lib/display.c:62:6:display_buttonsWindow	80	static
+../display_lib/display.c:133:6:display_bottomBarWindow	40	static
+../display_lib/display.c:161:6:display_chartWindow	32	static
+../display_lib/display.c:192:6:update_chart	16	static
