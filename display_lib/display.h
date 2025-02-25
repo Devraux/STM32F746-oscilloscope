@@ -75,4 +75,6 @@ void display_bottomBarWindow(void);
 ///	Due to small screen size topBarWindow is not used. Some data from Top bar were moved to bottom bar
 ///void display_topBarWindow(void);
 
+
+void display_getFPS(void);
 #endif

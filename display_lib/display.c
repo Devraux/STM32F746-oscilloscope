@@ -49,9 +49,9 @@ void display_init(void)
 
 
 	//Display tool bars and chart template initialization
+	display_chartWindow();
 	display_bottomBarWindow();
 	display_buttonsWindow();
-	display_chartWindow();
 
 }
 
@@ -161,10 +161,10 @@ void display_chartWindow(void)
 	lv_obj_set_size(chart, 380, 250);
 	lv_obj_align(chart, LV_ALIGN_TOP_LEFT, 0, 0);
 	lv_chart_set_type(chart, LV_CHART_TYPE_LINE);
-	lv_obj_set_style_radius(chart, 2, LV_PART_MAIN);
-	lv_obj_set_style_bg_color(chart, lv_color_hex(0x0d0d0c), LV_PART_MAIN);
-	//lv_obj_set_style_border_color(chart, lv_color_hex(0x1b39c6), LV_PART_MAIN);
-	//lv_obj_set_style_border_width(chart, 2, LV_PART_MAIN);
+	lv_obj_set_style_radius(chart, 2, LV_PART_MAIN); // set chart corner style(radius)
+	lv_obj_set_style_border_color(chart, lv_color_hex(0x1b39c6), LV_PART_MAIN);
+	lv_obj_set_style_border_width(chart, 1, LV_PART_MAIN);
+	lv_chart_set_div_line_count(chart, 5, 5);
 
 	lv_chart_series_t * ser1 = lv_chart_add_series(chart, lv_palette_main(LV_PALETTE_GREEN), LV_CHART_AXIS_PRIMARY_Y);
 
@@ -173,3 +173,4 @@ void display_chartWindow(void)
 
 	lv_chart_refresh(chart); /*Required after direct set*/
 }
+

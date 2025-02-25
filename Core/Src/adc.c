@@ -128,7 +128,7 @@ void MX_ADC3_Init(void)
   data_bufferInit(&dataBuffer_t, &ADC_currentValue, ADC_dataBufferSize);
 
   // ADC DMA START MEASUREMENTS
-  HAL_ADC_Start_DMA(&hadc3, &ADC_currentValue, 1);
+  // HAL_ADC_Start_DMA(&hadc3, &ADC_currentValue, 1);
 
 
 

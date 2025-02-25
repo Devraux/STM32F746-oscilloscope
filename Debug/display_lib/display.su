@@ -2,4 +2,4 @@
 ../display_lib/display.c:40:6:display_init	32	static
 ../display_lib/display.c:58:6:display_buttonsWindow	80	static
 ../display_lib/display.c:129:6:display_bottomBarWindow	40	static
-../display_lib/display.c:157:6:display_chartWindow	32	static
+../display_lib/display.c:157:6:display_chartWindow	48	static
