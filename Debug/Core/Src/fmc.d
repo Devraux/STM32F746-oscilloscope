@@ -437,6 +437,8 @@ Core/Src/fmc.o: ../Core/Src/fmc.c ../Core/Inc/fmc.h ../Core/Inc/main.h \
  ../Core/Inc/../../display_lib/../Core/Inc/adc.h \
  ../Core/Inc/../../display_lib/../Core/Inc/main.h \
  ../Core/Inc/../../display_lib/../Core/Inc/../../Data_Buffer/Data_Buffer.h \
+ ../Core/Inc/../../display_lib/../Core/Inc/stm32f7xx_it.h \
+ ../Core/Inc/../../display_lib/../Core/Inc/adc.h \
  ../Core/Inc/../Inc/ltdc.h ../Core/Inc/../Inc/main.h \
  ../Core/Inc/../Inc/tim.h
 ../Core/Inc/fmc.h:
@@ -890,6 +892,8 @@ Core/Src/fmc.o: ../Core/Src/fmc.c ../Core/Inc/fmc.h ../Core/Inc/main.h \
 ../Core/Inc/../../display_lib/../Core/Inc/adc.h:
 ../Core/Inc/../../display_lib/../Core/Inc/main.h:
 ../Core/Inc/../../display_lib/../Core/Inc/../../Data_Buffer/Data_Buffer.h:
+../Core/Inc/../../display_lib/../Core/Inc/stm32f7xx_it.h:
+../Core/Inc/../../display_lib/../Core/Inc/adc.h:
 ../Core/Inc/../Inc/ltdc.h:
 ../Core/Inc/../Inc/main.h:
 ../Core/Inc/../Inc/tim.h:

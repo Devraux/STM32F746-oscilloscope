@@ -21,6 +21,7 @@ static lv_obj_t *time;
 
 ////////////////////// Data display local objects //////////////////////
 static lv_obj_t * chart;
+static lv_chart_series_t *ser;
 ////////////////////////////////////////////////////////////////////////
 
 // uint32_t my_ltdc_layer_index = 0; /* typically 0 or 1 */
@@ -141,7 +142,6 @@ void display_bottomBarWindow(void)
 	lv_obj_set_style_radius(bottom_bar, 0, LV_PART_MAIN);
 
 
-
 	voltsDiv = lv_label_create(bottom_bar);
 	lv_label_set_text(voltsDiv, "V/Div:");
 	lv_obj_align(voltsDiv, LV_ALIGN_LEFT_MID, 0, 0);
@@ -175,13 +175,13 @@ void display_chartWindow(void)
 	////////////////////// chart OX & OY PLOT AXIS ////////////////////////
 	display_setAxis();
 
+
 	////////////////////// chart ADC Data plot ////////////////////////
-	uint32_t *ADC_dataPtr = ADC_getDataPtrBuffer1();
-	lv_chart_series_t *ser = lv_chart_add_series(chart, lv_palette_main(LV_PALETTE_RED), LV_CHART_AXIS_PRIMARY_Y);
+	//uint32_t *ADC_dataPtr = ADC_getDataPtrBuffer1();
+	ser = lv_chart_add_series(chart, lv_palette_main(LV_PALETTE_RED), LV_CHART_AXIS_PRIMARY_Y);
 	lv_chart_set_range(chart, LV_CHART_AXIS_PRIMARY_Y, -3000, 3000);
     lv_chart_set_point_count(chart, 480);
-    lv_chart_set_ext_y_array(chart, ser, (int32_t*)ADC_dataPtr);
-
+    //lv_chart_set_ext_y_array(chart, ser, (int32_t*)ADC_dataPtr);
 
     lv_timer_create(update_chart, 100, NULL);
 	lv_chart_refresh(chart);
@@ -335,7 +335,16 @@ void display_setAxis(void)
 	lv_obj_add_style(OY_scale_1, &style_axis, LV_PART_MAIN);
 }
 
-
 void update_chart(lv_timer_t *timer) {
+	//@important -> DMA IRQ after copied one buffer is placed in stm32f746xx_it.c
+	uint32_t *ADC_dataPtr = ADC_getProperBuffer();
+	lv_chart_set_ext_y_array(chart, ser, (int32_t*)ADC_dataPtr);
     lv_chart_refresh(chart);
+
+// DOUBLE BUFFERING TEST ///
+//    if((hadc3.DMA_Handle->Instance->CR & DMA_SxCR_CT) == 0)
+//    	printf("0\n");
+//    if((hadc3.DMA_Handle->Instance->CR & DMA_SxCR_CT) == 1)
+//    else
+//    	printf("1\n");
 }

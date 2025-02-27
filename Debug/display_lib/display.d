@@ -436,8 +436,9 @@ display_lib/display.o: ../display_lib/display.c ../display_lib/display.h \
  ../Core/Src/lvgl/../STM32F746_Hardware_Lib/stm32746g_discovery_sdram.h \
  ../display_lib/../Core/Inc/adc.h ../display_lib/../Core/Inc/main.h \
  ../display_lib/../Core/Inc/../../Data_Buffer/Data_Buffer.h \
- ../Core/Inc/../Inc/ltdc.h ../Core/Inc/../Inc/main.h \
- ../Core/Inc/../Inc/tim.h
+ ../display_lib/../Core/Inc/stm32f7xx_it.h \
+ ../display_lib/../Core/Inc/adc.h ../Core/Inc/../Inc/ltdc.h \
+ ../Core/Inc/../Inc/main.h ../Core/Inc/../Inc/tim.h
 ../display_lib/display.h:
 ../Core/Inc/main.h:
 ../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal.h:
@@ -888,6 +889,8 @@ display_lib/display.o: ../display_lib/display.c ../display_lib/display.h \
 ../display_lib/../Core/Inc/adc.h:
 ../display_lib/../Core/Inc/main.h:
 ../display_lib/../Core/Inc/../../Data_Buffer/Data_Buffer.h:
+../display_lib/../Core/Inc/stm32f7xx_it.h:
+../display_lib/../Core/Inc/adc.h:
 ../Core/Inc/../Inc/ltdc.h:
 ../Core/Inc/../Inc/main.h:
 ../Core/Inc/../Inc/tim.h:

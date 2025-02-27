@@ -142,7 +142,7 @@ int main(void)
 		//HAL_Delay(200);
 
 
-		HAL_Delay(50);
+		HAL_Delay(100);
 		lv_task_handler();
 
     /* USER CODE END WHILE */

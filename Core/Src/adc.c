@@ -21,13 +21,8 @@
 #include "adc.h"
 
 /* USER CODE BEGIN 0 */
-static uint32_t *ADC_valueArr = NULL;
-
 static uint32_t *ADC_buffer1 = NULL;
 static uint32_t *ADC_buffer2 = NULL;
-
-//static dataBuffer dataBuffer_t;
-//static uint32_t *dataBufferData;
 
 /* USER CODE END 0 */
 
@@ -137,11 +132,12 @@ void MX_ADC3_Init(void)
   HAL_ADC_Start_DMA(&hadc3, ADC_buffer1, ADC_dataBufferSize);
 
   __HAL_DMA_DISABLE(hadc3.DMA_Handle);
-  hadc3.DMA_Handle->Instance->CR |= DMA_SxCR_DBM;
-  hadc3.DMA_Handle->Instance->M0AR = (uint32_t)ADC_buffer1;
-  hadc3.DMA_Handle->Instance->M1AR = (uint32_t)ADC_buffer2;
+  hadc3.DMA_Handle->Instance->CR 	|= DMA_SxCR_DBM;
+  hadc3.DMA_Handle->Instance->M0AR 	 = (uint32_t)ADC_buffer1;
+  hadc3.DMA_Handle->Instance->M1AR 	 = (uint32_t)ADC_buffer2;
   __HAL_DMA_ENABLE(hadc3.DMA_Handle);
 
+  __HAL_DMA_ENABLE_IT(&hdma_adc3, DMA_IT_TC);
 
   /* USER CODE END ADC3_Init 2 */
 
@@ -277,5 +273,17 @@ uint32_t *ADC_getDataPtrBuffer2(void)
 {
 	return ADC_buffer2;
 }
+
+uint32_t *ADC_getProperBuffer(void)
+{
+	if(get_ADCActiveBuffer() == current_activeBuffer1)
+		return ADC_buffer1;
+
+	else
+		return ADC_buffer2;
+}
+
+
+
 
 /* USER CODE END 1 */

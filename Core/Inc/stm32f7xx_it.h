@@ -27,7 +27,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "adc.h"
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
@@ -61,6 +61,8 @@ void DMA2_Stream0_IRQHandler(void);
 void LTDC_IRQHandler(void);
 void DMA2D_IRQHandler(void);
 /* USER CODE BEGIN EFP */
+
+enum ADC_activeBuffer get_ADCActiveBuffer(void);
 
 /* USER CODE END EFP */
 

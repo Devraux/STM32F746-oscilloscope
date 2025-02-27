@@ -31,6 +31,8 @@ extern "C" {
 /* USER CODE BEGIN Includes */
 
 #include "../../Data_Buffer/Data_Buffer.h"
+#include "stm32f7xx_it.h"
+#include "stdbool.h"
 
 /* USER CODE END Includes */
 
@@ -51,6 +53,12 @@ void MX_ADC3_Init(void);
 // Double buffering DMA & ADC
 uint32_t *ADC_getDataPtrBuffer1(void);
 uint32_t *ADC_getDataPtrBuffer2(void);
+uint32_t *ADC_getProperBuffer(void);
+
+typedef enum ADC_activeBuffer{
+	current_activeBuffer1 = 1,
+	current_activeBuffer2 = 2,
+}ADC_activeBuffer;
 
 /* USER CODE END Prototypes */
 
