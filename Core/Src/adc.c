@@ -22,6 +22,10 @@
 
 /* USER CODE BEGIN 0 */
 static uint32_t *ADC_valueArr = NULL;
+
+static uint32_t *ADC_buffer1 = NULL;
+static uint32_t *ADC_buffer2 = NULL;
+
 //static dataBuffer dataBuffer_t;
 //static uint32_t *dataBufferData;
 
@@ -124,12 +128,19 @@ void MX_ADC3_Init(void)
   /* USER CODE BEGIN ADC3_Init 2 */
 
   // Data buffer Initialization
-  ADC_valueArr = (uint32_t*)malloc(ADC_byteDataBufferSize);//buffer 5 times bigger than available screen size(272px x 480 px) -> 480px*5=2400
+  //ADC_valueArr = (uint32_t*)malloc(ADC_byteDataBufferSize);//buffer 5 times bigger than available screen size(272px x 480 px) -> 480px*5=2400
+  ADC_buffer1  = (uint32_t*)malloc(ADC_byteDataBufferSize);
+  ADC_buffer2  = (uint32_t*)malloc(ADC_byteDataBufferSize);
   //data_bufferInit(&dataBuffer_t, ADC_currentValueArr, ADC_dataBufferSize);
 
   // ADC DMA START MEASUREMENTS
-  HAL_ADC_Start_DMA(&hadc3, ADC_valueArr, ADC_dataBufferSize);
+  HAL_ADC_Start_DMA(&hadc3, ADC_buffer1, ADC_dataBufferSize);
 
+  __HAL_DMA_DISABLE(hadc3.DMA_Handle);
+  hadc3.DMA_Handle->Instance->CR |= DMA_SxCR_DBM;
+  hadc3.DMA_Handle->Instance->M0AR = (uint32_t)ADC_buffer1;
+  hadc3.DMA_Handle->Instance->M1AR = (uint32_t)ADC_buffer2;
+  __HAL_DMA_ENABLE(hadc3.DMA_Handle);
 
 
   /* USER CODE END ADC3_Init 2 */
@@ -256,8 +267,15 @@ void HAL_ADC_MspDeInit(ADC_HandleTypeDef* adcHandle)
 }
 
 /* USER CODE BEGIN 1 */
-uint32_t *ADC_getDataPtr(void)
+uint32_t *ADC_getDataPtrBuffer1(void)
 {
-	return ADC_valueArr;
+	return ADC_buffer1;
 }
+
+
+uint32_t *ADC_getDataPtrBuffer2(void)
+{
+	return ADC_buffer2;
+}
+
 /* USER CODE END 1 */

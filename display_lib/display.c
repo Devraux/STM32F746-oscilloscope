@@ -64,14 +64,14 @@ void display_buttonsWindow(void)
 
 	//////////////////////////// Stop/Run /////////////////////////////////////
 	lv_obj_t *btn_stopRun = lv_button_create(lv_screen_active());
-	lv_obj_set_size(btn_stopRun, 100, 48);
+	lv_obj_set_size(btn_stopRun, DISPLAY_BUTTONS_WIDTH, DISPLAY_BUTTONS_HEIGHT);
 	lv_obj_align(btn_stopRun, LV_ALIGN_TOP_RIGHT, 0, 0);
 	lv_obj_set_style_bg_color(btn_stopRun, lv_color_hex(0x1b39c6), LV_PART_MAIN);
 	lv_obj_set_style_radius(btn_stopRun, 2, LV_PART_MAIN);
 
 
 	label_stopRun = lv_label_create(btn_stopRun);
-	lv_label_set_text(label_stopRun, "Stop/Run");
+	lv_label_set_text(label_stopRun, "Stop");
 	lv_obj_center(label_stopRun);
 	lv_obj_set_style_text_color(label_stopRun, lv_color_hex(0xd6e32b), LV_PART_MAIN);
 	///////////////////////////////////////////////////////////////////////////
@@ -79,7 +79,7 @@ void display_buttonsWindow(void)
 
 	//////////////////////////// Place X/Y Cursor 1 | 2 ///////////////////////
 	lv_obj_t *btn_Cursor = lv_button_create(lv_screen_active());
-	lv_obj_set_size(btn_Cursor, 100, 48);
+	lv_obj_set_size(btn_Cursor, DISPLAY_BUTTONS_WIDTH, DISPLAY_BUTTONS_HEIGHT);
 	lv_obj_align(btn_Cursor, LV_ALIGN_TOP_RIGHT,0 ,50);
 	lv_obj_set_style_bg_color(btn_Cursor, lv_color_hex(0x1b39c6), LV_PART_MAIN);
 	lv_obj_set_style_radius(btn_Cursor, 2, LV_PART_MAIN);
@@ -92,7 +92,7 @@ void display_buttonsWindow(void)
 
 	//////////////////////////// DC/AC Coupling ///////////////////////////////
 	lv_obj_t *btn_DC_ACCoupling = lv_button_create(lv_screen_active());
-	lv_obj_set_size(btn_DC_ACCoupling, 100, 48);
+	lv_obj_set_size(btn_DC_ACCoupling, DISPLAY_BUTTONS_WIDTH, DISPLAY_BUTTONS_HEIGHT);
 	lv_obj_align(btn_DC_ACCoupling, LV_ALIGN_TOP_RIGHT, 0, 100);
 	lv_obj_set_style_bg_color(btn_DC_ACCoupling, lv_color_hex(0x1b39c6), LV_PART_MAIN);
 	lv_obj_set_style_radius(btn_DC_ACCoupling, 2, LV_PART_MAIN);
@@ -105,7 +105,7 @@ void display_buttonsWindow(void)
 
 	//////////////////////////// Math functions ///////////////////////////////
 	lv_obj_t *btn_mathFun = lv_button_create(lv_screen_active());
-	lv_obj_set_size(btn_mathFun, 100, 48);
+	lv_obj_set_size(btn_mathFun, DISPLAY_BUTTONS_WIDTH, DISPLAY_BUTTONS_HEIGHT);
 	lv_obj_align(btn_mathFun, LV_ALIGN_TOP_RIGHT, 0, 150);
 	lv_obj_set_style_bg_color(btn_mathFun, lv_color_hex(0x1b39c6), LV_PART_MAIN);
 	lv_obj_set_style_radius(btn_mathFun, 2, LV_PART_MAIN);
@@ -118,7 +118,7 @@ void display_buttonsWindow(void)
 
 	//////////////////////////// More options /////////////////////////////////
 	lv_obj_t *btn_options = lv_button_create(lv_screen_active());
-	lv_obj_set_size(btn_options, 100, 48);
+	lv_obj_set_size(btn_options, DISPLAY_BUTTONS_WIDTH, DISPLAY_BUTTONS_HEIGHT);
 	lv_obj_align(btn_options, LV_ALIGN_TOP_RIGHT, 0, 200);
 	lv_obj_set_style_bg_color(btn_options, lv_color_hex(0x1b39c6), LV_PART_MAIN);
 	lv_obj_set_style_radius(btn_options, 2, LV_PART_MAIN);
@@ -132,8 +132,8 @@ void display_buttonsWindow(void)
 
 void display_bottomBarWindow(void)
 {
-	lv_obj_t *bottom_bar = lv_obj_create(lv_scr_act());
-	lv_obj_set_size(bottom_bar, 480, 22);
+	lv_obj_t *bottom_bar = lv_obj_create(lv_screen_active());
+	lv_obj_set_size(bottom_bar, 480, 24);
 	lv_obj_align(bottom_bar, LV_ALIGN_BOTTOM_MID, 0, 0);
 	lv_obj_set_style_bg_color(bottom_bar, lv_color_hex(0x1b39c6), LV_PART_MAIN);
 	lv_obj_clear_flag(bottom_bar, LV_OBJ_FLAG_SCROLLABLE);
@@ -153,41 +153,188 @@ void display_bottomBarWindow(void)
 	lv_obj_set_style_text_color(timeDiv, lv_color_hex(0xd6e32b), LV_PART_MAIN);
 
 	time = lv_label_create(bottom_bar);
-	lv_label_set_text(time, "Time: 12:00");
+	lv_label_set_text(time, "Time: 12:15");
 	lv_obj_align(time, LV_ALIGN_LEFT_MID, 370, 0);
 	lv_obj_set_style_text_color(time, lv_color_hex(0xd6e32b), LV_PART_MAIN);
 }
 
 void display_chartWindow(void)
 {
+////////////////////// chart basic properties /////////////////
 	chart = lv_chart_create(lv_screen_active());
-	lv_obj_set_size(chart, 380, 250);
-	lv_obj_align(chart, LV_ALIGN_TOP_LEFT, 0, 0);
+	lv_obj_set_size(chart, DISPLAY_CHART_WIDTH, DISPLAY_CHART_HEIGHT);
+	lv_obj_align(chart, LV_ALIGN_CENTER, -38, -12);
 	lv_chart_set_type(chart, LV_CHART_TYPE_LINE);
 	lv_obj_set_style_radius(chart, 2, LV_PART_MAIN); // set chart corner style(radius)
 	lv_obj_set_style_border_color(chart, lv_color_hex(0x1b39c6), LV_PART_MAIN);
-	lv_obj_set_style_border_width(chart, 1, LV_PART_MAIN);
-	lv_chart_set_div_line_count(chart, 5, 5);
-    //lv_chart_set_axis_tick(chart, LV_CHART_AXIS_PRIMARY_Y, 10, 5, 6, 2, true);
-    //lv_chart_set_axis_tick(chart, LV_CHART_AXIS_PRIMARY_X, 10, 5, 6, 2, true);
+	lv_obj_set_style_border_width(chart, 2, LV_PART_MAIN);
+	lv_obj_set_style_pad_all(chart, 0, LV_PART_MAIN);
+	lv_obj_set_style_bg_color(chart, lv_color_hex(0xFFFFFF), LV_PART_MAIN);
+	//lv_obj_set_style_bg_opa(chart, LV_OPA_COVER, LV_PART_MAIN);
 
+	////////////////////// chart OX & OY PLOT AXIS ////////////////////////
+	display_setAxis();
 
-	uint32_t *ADC_dataPtr = ADC_getDataPtr();
-
+	////////////////////// chart ADC Data plot ////////////////////////
+	uint32_t *ADC_dataPtr = ADC_getDataPtrBuffer1();
 	lv_chart_series_t *ser = lv_chart_add_series(chart, lv_palette_main(LV_PALETTE_RED), LV_CHART_AXIS_PRIMARY_Y);
-	lv_chart_set_range(chart, LV_CHART_AXIS_PRIMARY_Y, 0, 3000);
+	lv_chart_set_range(chart, LV_CHART_AXIS_PRIMARY_Y, -3000, 3000);
     lv_chart_set_point_count(chart, 480);
     lv_chart_set_ext_y_array(chart, ser, (int32_t*)ADC_dataPtr);
+
+
     lv_timer_create(update_chart, 100, NULL);
-
-
-
-//	lv_chart_series_t * ser1 = lv_chart_add_series(chart, lv_palette_main(LV_PALETTE_GREEN), LV_CHART_AXIS_PRIMARY_Y);
-//	for(uint32_t i = 0; i < 10; i++)
-//		lv_chart_set_next_value(chart, ser1, lv_rand(10, 50));
-
-	lv_chart_refresh(chart); /*Required after direct set*/
+	lv_chart_refresh(chart);
 }
+
+void display_setAxis(void)
+{
+	////////////////////// chart OX & OY Axis ////////////////////////
+	static lv_style_t style_axis;
+	lv_style_init(&style_axis);
+	lv_style_set_line_width(&style_axis, 1);
+	lv_style_set_line_color(&style_axis, lv_color_hex(0x000000));
+
+
+	////////////////////// chart MIDDLE OX ////////////////////////
+	lv_obj_t *OX_scale_1 = lv_scale_create(chart);
+	lv_scale_set_mode(OX_scale_1, LV_SCALE_MODE_HORIZONTAL_TOP);
+	lv_obj_set_size(OX_scale_1, DISPLAY_CHART_WIDTH - 6, 0);
+	lv_obj_set_style_pad_hor(OX_scale_1, lv_chart_get_first_point_center_offset(chart), 0);
+	lv_obj_set_style_text_font(OX_scale_1, NULL, 0);
+	lv_obj_align(OX_scale_1, LV_ALIGN_LEFT_MID, 0, 0);
+	lv_scale_set_total_tick_count(OX_scale_1, 71);
+	lv_scale_set_major_tick_every(OX_scale_1, 5);
+	lv_obj_set_style_length(OX_scale_1, 3, LV_PART_ITEMS);
+	lv_obj_set_style_length(OX_scale_1, 5, LV_PART_INDICATOR);
+	lv_obj_set_style_line_width(OX_scale_1, 1, LV_PART_ITEMS);
+	lv_obj_set_style_line_width(OX_scale_1, 1, LV_PART_INDICATOR);
+	//lv_obj_set_style_line_color(OX_scale_1, lv_palette_main(LV_PALETTE_BLUE), LV_PART_ITEMS);
+	//lv_obj_set_style_line_color(OX_scale_1, lv_palette_main(LV_PALETTE_RED), LV_PART_INDICATOR);
+	lv_obj_add_style(OX_scale_1, &style_axis, LV_PART_MAIN);
+
+	lv_obj_t *OX_scale_2 = lv_scale_create(chart);
+	lv_scale_set_mode(OX_scale_2, LV_SCALE_MODE_HORIZONTAL_BOTTOM);
+	lv_obj_set_size(OX_scale_2, DISPLAY_CHART_WIDTH - 6, 0);
+	lv_obj_set_style_pad_hor(OX_scale_2, lv_chart_get_first_point_center_offset(chart), 0);
+	lv_obj_set_style_text_font(OX_scale_2, NULL, 0);
+	lv_obj_align(OX_scale_2, LV_ALIGN_LEFT_MID, 0, 0);
+	lv_scale_set_total_tick_count(OX_scale_2, 71);
+	lv_scale_set_major_tick_every(OX_scale_2, 5);
+	lv_obj_set_style_length(OX_scale_2, 3, LV_PART_ITEMS);
+	lv_obj_set_style_length(OX_scale_2, 5, LV_PART_INDICATOR);
+	lv_obj_set_style_line_width(OX_scale_2, 1, LV_PART_ITEMS);
+	lv_obj_set_style_line_width(OX_scale_2, 1, LV_PART_INDICATOR);
+	//lv_obj_set_style_line_color(OX_scale_2, lv_palette_main(LV_PALETTE_BLUE), LV_PART_ITEMS);
+	//lv_obj_set_style_line_color(OX_scale_2, lv_palette_main(LV_PALETTE_RED), LV_PART_INDICATOR);
+	lv_obj_add_style(OX_scale_2, &style_axis, LV_PART_MAIN);
+
+
+	////////////////////// chart BOTTOM SIDE OX ////////////////////////
+	lv_obj_t *OX_scaleBottom = lv_scale_create(chart);
+	lv_scale_set_mode(OX_scaleBottom, LV_SCALE_MODE_HORIZONTAL_TOP);
+	lv_obj_set_size(OX_scaleBottom, DISPLAY_CHART_WIDTH - 6, 0);
+	lv_obj_set_style_pad_hor(OX_scaleBottom, lv_chart_get_first_point_center_offset(chart), 0);
+	lv_obj_set_style_text_font(OX_scaleBottom, NULL, 0);
+	lv_obj_align(OX_scaleBottom, LV_ALIGN_BOTTOM_MID, -1, 0);
+	lv_scale_set_total_tick_count(OX_scaleBottom, 71);
+	lv_scale_set_major_tick_every(OX_scaleBottom, 5);
+	lv_obj_set_style_length(OX_scaleBottom, 4, LV_PART_ITEMS);
+	lv_obj_set_style_length(OX_scaleBottom, 6, LV_PART_INDICATOR);
+	lv_obj_set_style_line_width(OX_scaleBottom, 1, LV_PART_ITEMS);
+	lv_obj_set_style_line_width(OX_scaleBottom, 1, LV_PART_INDICATOR);
+	//lv_obj_set_style_line_color(OX_scale_1, lv_palette_main(LV_PALETTE_BLUE), LV_PART_ITEMS);
+	//lv_obj_set_style_line_color(OX_scale_1, lv_palette_main(LV_PALETTE_RED), LV_PART_INDICATOR);
+	lv_obj_add_style(OX_scaleBottom, &style_axis, LV_PART_MAIN);
+
+
+	////////////////////// chart TOP SIDE OX ////////////////////////
+	lv_obj_t *OX_scaleTop = lv_scale_create(chart);
+	lv_scale_set_mode(OX_scaleTop, LV_SCALE_MODE_HORIZONTAL_BOTTOM);
+	lv_obj_set_size(OX_scaleTop, DISPLAY_CHART_WIDTH - 6, 0);
+	lv_obj_set_style_pad_hor(OX_scaleTop, lv_chart_get_first_point_center_offset(chart), 0);
+	lv_obj_set_style_text_font(OX_scaleTop, NULL, 0);
+	lv_obj_align(OX_scaleTop, LV_ALIGN_TOP_MID, -1, 0);
+	lv_scale_set_total_tick_count(OX_scaleTop, 71);
+	lv_scale_set_major_tick_every(OX_scaleTop, 5);
+	lv_obj_set_style_length(OX_scaleTop, 4, LV_PART_ITEMS);
+	lv_obj_set_style_length(OX_scaleTop, 6, LV_PART_INDICATOR);
+	lv_obj_set_style_line_width(OX_scaleTop, 1, LV_PART_ITEMS);
+	lv_obj_set_style_line_width(OX_scaleTop, 1, LV_PART_INDICATOR);
+	//lv_obj_set_style_line_color(OX_scale_2, lv_palette_main(LV_PALETTE_BLUE), LV_PART_ITEMS);
+	//lv_obj_set_style_line_color(OX_scale_2, lv_palette_main(LV_PALETTE_RED), LV_PART_INDICATOR);
+	lv_obj_add_style(OX_scaleTop, &style_axis, LV_PART_MAIN);
+
+
+	////////////////////// chart MIDDLE OY ////////////////////////
+	lv_obj_t * OY_scale_1 = lv_scale_create(chart);
+	lv_scale_set_mode(OY_scale_1, LV_SCALE_MODE_VERTICAL_RIGHT);
+	lv_obj_set_size(OY_scale_1, 0, DISPLAY_CHART_HEIGHT - 4);
+	lv_obj_set_style_pad_hor(OY_scale_1, lv_chart_get_first_point_center_offset(chart), 0);
+	lv_obj_set_style_text_font(OY_scale_1, NULL, 0);
+	lv_obj_align(OY_scale_1, LV_ALIGN_CENTER, 0, 0);
+	lv_scale_set_total_tick_count(OY_scale_1, 51);
+	lv_scale_set_major_tick_every(OY_scale_1, 5);
+	lv_obj_set_style_length(OY_scale_1, 4, LV_PART_ITEMS);
+	lv_obj_set_style_length(OY_scale_1, 6, LV_PART_INDICATOR);
+	lv_obj_set_style_line_width(OY_scale_1, 1, LV_PART_ITEMS);
+	lv_obj_set_style_line_width(OY_scale_1, 1, LV_PART_INDICATOR);
+	//lv_obj_set_style_line_color(OY_scale_1, lv_palette_main(LV_PALETTE_BLUE), LV_PART_ITEMS);
+	//lv_obj_set_style_line_color(OY_scale_1, lv_palette_main(LV_PALETTE_RED), LV_PART_INDICATOR);
+	lv_obj_add_style(OY_scale_1, &style_axis, LV_PART_MAIN);
+
+	lv_obj_t * OY_scale_2 = lv_scale_create(chart);
+	lv_scale_set_mode(OY_scale_2, LV_SCALE_MODE_VERTICAL_LEFT);
+	lv_obj_set_size(OY_scale_2, 0, DISPLAY_CHART_HEIGHT - 4);
+	lv_obj_set_style_pad_hor(OY_scale_2, lv_chart_get_first_point_center_offset(chart), 0);
+	lv_obj_set_style_text_font(OY_scale_2, NULL, 0);
+	lv_obj_align(OY_scale_2, LV_ALIGN_CENTER, 0, 0);
+	lv_scale_set_total_tick_count(OY_scale_2, 51);
+	lv_scale_set_major_tick_every(OY_scale_2, 5);
+	lv_obj_set_style_length(OY_scale_2, 4, LV_PART_ITEMS);
+	lv_obj_set_style_length(OY_scale_2, 6, LV_PART_INDICATOR);
+	lv_obj_set_style_line_width(OY_scale_2, 1, LV_PART_ITEMS);
+	lv_obj_set_style_line_width(OY_scale_2, 1, LV_PART_INDICATOR);
+	//lv_obj_set_style_line_color(OY_scale_2, lv_palette_main(LV_PALETTE_BLUE), LV_PART_ITEMS);
+	//lv_obj_set_style_line_color(OY_scale_2, lv_palette_main(LV_PALETTE_RED), LV_PART_INDICATOR);
+	lv_obj_add_style(OY_scale_2, &style_axis, LV_PART_MAIN);
+
+
+	////////////////////// chart LEFT SIDE OY ////////////////////////
+	lv_obj_t * OY_scaleLeft = lv_scale_create(chart);
+	lv_scale_set_mode(OY_scaleLeft, LV_SCALE_MODE_VERTICAL_RIGHT);
+	lv_obj_set_size(OY_scaleLeft, 0, DISPLAY_CHART_HEIGHT - 4);
+	lv_obj_set_style_pad_hor(OY_scaleLeft, lv_chart_get_first_point_center_offset(chart), 0);
+	lv_obj_set_style_text_font(OY_scaleLeft, NULL, 0);
+	lv_obj_align(OY_scaleLeft, LV_ALIGN_LEFT_MID, 0, 0);
+	lv_scale_set_total_tick_count(OY_scaleLeft, 51);
+	lv_scale_set_major_tick_every(OY_scaleLeft, 5);
+	lv_obj_set_style_length(OY_scaleLeft, 4, LV_PART_ITEMS);
+	lv_obj_set_style_length(OY_scaleLeft, 6, LV_PART_INDICATOR);
+	lv_obj_set_style_line_width(OY_scaleLeft, 1, LV_PART_ITEMS);
+	lv_obj_set_style_line_width(OY_scaleLeft, 1, LV_PART_INDICATOR);
+	//lv_obj_set_style_line_color(OY_scale_1, lv_palette_main(LV_PALETTE_BLUE), LV_PART_ITEMS);
+	//lv_obj_set_style_line_color(OY_scale_1, lv_palette_main(LV_PALETTE_RED), LV_PART_INDICATOR);
+	lv_obj_add_style(OY_scale_1, &style_axis, LV_PART_MAIN);
+
+	////////////////////// chart RIGHT SIDE OY ////////////////////////
+	lv_obj_t *OY_scaleRight = lv_scale_create(chart);
+	lv_scale_set_mode(OY_scaleRight, LV_SCALE_MODE_VERTICAL_LEFT);
+	lv_obj_set_size(OY_scaleRight, 0, DISPLAY_CHART_HEIGHT - 4);
+	lv_obj_set_style_pad_hor(OY_scaleRight, lv_chart_get_first_point_center_offset(chart), 0);
+	lv_obj_set_style_text_font(OY_scaleRight, NULL, 0);
+	lv_obj_align(OY_scaleRight, LV_ALIGN_RIGHT_MID, 0, 0);
+	lv_scale_set_total_tick_count(OY_scaleRight, 51);
+	lv_scale_set_major_tick_every(OY_scaleRight, 5);
+	lv_obj_set_style_length(OY_scaleRight, 4, LV_PART_ITEMS);
+	lv_obj_set_style_length(OY_scaleRight, 6, LV_PART_INDICATOR);
+	lv_obj_set_style_line_width(OY_scaleRight, 1, LV_PART_ITEMS);
+	lv_obj_set_style_line_width(OY_scaleRight, 1, LV_PART_INDICATOR);
+	//lv_obj_set_style_line_color(OY_scale_1, lv_palette_main(LV_PALETTE_BLUE), LV_PART_ITEMS);
+	//lv_obj_set_style_line_color(OY_scale_1, lv_palette_main(LV_PALETTE_RED), LV_PART_INDICATOR);
+	lv_obj_add_style(OY_scale_1, &style_axis, LV_PART_MAIN);
+}
+
 
 void update_chart(lv_timer_t *timer) {
     lv_chart_refresh(chart);

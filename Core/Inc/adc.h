@@ -39,15 +39,18 @@ extern ADC_HandleTypeDef hadc1;
 extern ADC_HandleTypeDef hadc3;
 
 /* USER CODE BEGIN Private defines */
-#define ADC_byteDataBufferSize 2400 * sizeof(uint32_t)
-#define ADC_dataBufferSize 2400
+#define ADC_dataBufferSize 1000
+#define ADC_byteDataBufferSize ADC_dataBufferSize * sizeof(uint32_t)
+
 /* USER CODE END Private defines */
 
 void MX_ADC1_Init(void);
 void MX_ADC3_Init(void);
 
 /* USER CODE BEGIN Prototypes */
-uint32_t *ADC_getDataPtr(void);
+// Double buffering DMA & ADC
+uint32_t *ADC_getDataPtrBuffer1(void);
+uint32_t *ADC_getDataPtrBuffer2(void);
 
 /* USER CODE END Prototypes */
 

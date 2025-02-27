@@ -31,6 +31,11 @@
 #define RESOLUTION_VERTICAL 272
 #define BYTES_PER_PIXEL (LV_COLOR_FORMAT_GET_SIZE(LV_COLOR_FORMAT_RGB565))
 
+#define DISPLAY_BUTTONS_WIDTH 	76
+#define DISPLAY_BUTTONS_HEIGHT 	48
+#define DISPLAY_CHART_WIDTH 	404
+#define DISPLAY_CHART_HEIGHT 	248
+
 void lv_example_get_started_2(void);
 
 /// display initialization
@@ -78,5 +83,6 @@ void display_bottomBarWindow(void);
 
 
 void update_chart(lv_timer_t *timer);
+void display_setAxis(void);
 
 #endif
