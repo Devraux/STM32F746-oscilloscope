@@ -179,7 +179,7 @@ void display_chartWindow(void)
 	////////////////////// chart ADC Data plot ////////////////////////
 	//uint32_t *ADC_dataPtr = ADC_getDataPtrBuffer1();
 	ser = lv_chart_add_series(chart, lv_palette_main(LV_PALETTE_RED), LV_CHART_AXIS_PRIMARY_Y);
-	lv_chart_set_range(chart, LV_CHART_AXIS_PRIMARY_Y, -3000, 3000);
+	lv_chart_set_range(chart, LV_CHART_AXIS_PRIMARY_Y, -4200, 4200);
     lv_chart_set_point_count(chart, 480);
     //lv_chart_set_ext_y_array(chart, ser, (int32_t*)ADC_dataPtr);
 
