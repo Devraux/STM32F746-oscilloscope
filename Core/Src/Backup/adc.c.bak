@@ -21,7 +21,8 @@
 #include "adc.h"
 
 /* USER CODE BEGIN 0 */
-uint32_t ADC_currentValue = 0; //@TODO change DMA VALUE read mode to array read mode
+static uint32_t *ADC_buffer1 = NULL;
+static uint32_t *ADC_buffer2 = NULL;
 
 /* USER CODE END 0 */
 
@@ -121,9 +122,22 @@ void MX_ADC3_Init(void)
   }
   /* USER CODE BEGIN ADC3_Init 2 */
 
-  // ADC DMA START MEASUREMENTS
-  HAL_ADC_Start_DMA(&hadc3, &ADC_currentValue, 1);
+  // Data buffer Initialization
+  //ADC_valueArr = (uint32_t*)malloc(ADC_byteDataBufferSize);//buffer 5 times bigger than available screen size(272px x 480 px) -> 480px*5=2400
+  ADC_buffer1  = (uint32_t*)malloc(ADC_byteDataBufferSize);
+  ADC_buffer2  = (uint32_t*)malloc(ADC_byteDataBufferSize);
+  //data_bufferInit(&dataBuffer_t, ADC_currentValueArr, ADC_dataBufferSize);
 
+  // ADC DMA START MEASUREMENTS
+  HAL_ADC_Start_DMA(&hadc3, ADC_buffer1, ADC_dataBufferSize);
+
+  __HAL_DMA_DISABLE(hadc3.DMA_Handle);
+  hadc3.DMA_Handle->Instance->CR 	|= DMA_SxCR_DBM;
+  hadc3.DMA_Handle->Instance->M0AR 	 = (uint32_t)ADC_buffer1;
+  hadc3.DMA_Handle->Instance->M1AR 	 = (uint32_t)ADC_buffer2;
+  __HAL_DMA_ENABLE(hadc3.DMA_Handle);
+
+  __HAL_DMA_ENABLE_IT(&hdma_adc3, DMA_IT_TC);
 
   /* USER CODE END ADC3_Init 2 */
 
@@ -172,8 +186,8 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef* adcHandle)
     hdma_adc3.Init.Direction = DMA_PERIPH_TO_MEMORY;
     hdma_adc3.Init.PeriphInc = DMA_PINC_DISABLE;
     hdma_adc3.Init.MemInc = DMA_MINC_ENABLE;
-    hdma_adc3.Init.PeriphDataAlignment = DMA_PDATAALIGN_HALFWORD;
-    hdma_adc3.Init.MemDataAlignment = DMA_MDATAALIGN_HALFWORD;
+    hdma_adc3.Init.PeriphDataAlignment = DMA_PDATAALIGN_WORD;
+    hdma_adc3.Init.MemDataAlignment = DMA_MDATAALIGN_WORD;
     hdma_adc3.Init.Mode = DMA_CIRCULAR;
     hdma_adc3.Init.Priority = DMA_PRIORITY_LOW;
     hdma_adc3.Init.FIFOMode = DMA_FIFOMODE_DISABLE;
@@ -249,8 +263,27 @@ void HAL_ADC_MspDeInit(ADC_HandleTypeDef* adcHandle)
 }
 
 /* USER CODE BEGIN 1 */
-void ADC_getCurrentValue(uint32_t *buffer)
+uint32_t *ADC_getDataPtrBuffer1(void)
 {
-	*buffer = ADC_currentValue;
+	return ADC_buffer1;
 }
+
+
+uint32_t *ADC_getDataPtrBuffer2(void)
+{
+	return ADC_buffer2;
+}
+
+uint32_t *ADC_getProperBuffer(void)
+{
+	if(get_ADCActiveBuffer() == current_activeBuffer1)
+		return ADC_buffer1;
+
+	else
+		return ADC_buffer2;
+}
+
+
+
+
 /* USER CODE END 1 */

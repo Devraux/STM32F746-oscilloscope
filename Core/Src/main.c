@@ -117,7 +117,7 @@ int main(void)
   BSP_SDRAM_Init();
   MX_ADC1_Init();
   MX_ADC3_Init();
-
+  MX_TIM12_Init();
   /* USER CODE BEGIN 2 */
   display_init();
 
@@ -264,7 +264,6 @@ static void MPU_Config(void)
 /* USER CODE END 4 */
 
  /* MPU Configuration */
-
 
 /**
   * @brief  This function is executed in case of error occurrence.

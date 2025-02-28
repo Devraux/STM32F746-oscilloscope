@@ -170,11 +170,12 @@ void display_chartWindow(void)
 	lv_obj_set_style_border_width(chart, 2, LV_PART_MAIN);
 	lv_obj_set_style_pad_all(chart, 0, LV_PART_MAIN);
 	lv_obj_set_style_bg_color(chart, lv_color_hex(0xFFFFFF), LV_PART_MAIN);
+	lv_chart_set_div_line_count(chart, 11, 15);
+	lv_obj_set_style_width(chart, 0, LV_PART_SCROLLBAR);
 	//lv_obj_set_style_bg_opa(chart, LV_OPA_COVER, LV_PART_MAIN);
 
 	////////////////////// chart OX & OY PLOT AXIS ////////////////////////
 	display_setAxis();
-
 
 	////////////////////// chart ADC Data plot ////////////////////////
 	//uint32_t *ADC_dataPtr = ADC_getDataPtrBuffer1();
@@ -185,6 +186,7 @@ void display_chartWindow(void)
 
     lv_timer_create(update_chart, 100, NULL);
 	lv_chart_refresh(chart);
+	//lv_obj_move_foreground(chart);
 }
 
 void display_setAxis(void)
@@ -195,14 +197,16 @@ void display_setAxis(void)
 	lv_style_set_line_width(&style_axis, 1);
 	lv_style_set_line_color(&style_axis, lv_color_hex(0x000000));
 
+	////////////////////// chart AXES STYLE ///////////////////////
+	lv_obj_add_style(chart, &style_axis, LV_PART_MAIN);
 
 	////////////////////// chart MIDDLE OX ////////////////////////
 	lv_obj_t *OX_scale_1 = lv_scale_create(chart);
 	lv_scale_set_mode(OX_scale_1, LV_SCALE_MODE_HORIZONTAL_TOP);
-	lv_obj_set_size(OX_scale_1, DISPLAY_CHART_WIDTH - 6, 0);
+	lv_obj_set_size(OX_scale_1, DISPLAY_CHART_WIDTH - 4, 0);
 	lv_obj_set_style_pad_hor(OX_scale_1, lv_chart_get_first_point_center_offset(chart), 0);
 	lv_obj_set_style_text_font(OX_scale_1, NULL, 0);
-	lv_obj_align(OX_scale_1, LV_ALIGN_LEFT_MID, 0, 0);
+	lv_obj_align(OX_scale_1, LV_ALIGN_LEFT_MID, 0, 1);
 	lv_scale_set_total_tick_count(OX_scale_1, 71);
 	lv_scale_set_major_tick_every(OX_scale_1, 5);
 	lv_obj_set_style_length(OX_scale_1, 3, LV_PART_ITEMS);
@@ -215,10 +219,10 @@ void display_setAxis(void)
 
 	lv_obj_t *OX_scale_2 = lv_scale_create(chart);
 	lv_scale_set_mode(OX_scale_2, LV_SCALE_MODE_HORIZONTAL_BOTTOM);
-	lv_obj_set_size(OX_scale_2, DISPLAY_CHART_WIDTH - 6, 0);
+	lv_obj_set_size(OX_scale_2, DISPLAY_CHART_WIDTH - 4, 0);
 	lv_obj_set_style_pad_hor(OX_scale_2, lv_chart_get_first_point_center_offset(chart), 0);
 	lv_obj_set_style_text_font(OX_scale_2, NULL, 0);
-	lv_obj_align(OX_scale_2, LV_ALIGN_LEFT_MID, 0, 0);
+	lv_obj_align(OX_scale_2, LV_ALIGN_LEFT_MID, 0, 1);
 	lv_scale_set_total_tick_count(OX_scale_2, 71);
 	lv_scale_set_major_tick_every(OX_scale_2, 5);
 	lv_obj_set_style_length(OX_scale_2, 3, LV_PART_ITEMS);
@@ -233,10 +237,10 @@ void display_setAxis(void)
 	////////////////////// chart BOTTOM SIDE OX ////////////////////////
 	lv_obj_t *OX_scaleBottom = lv_scale_create(chart);
 	lv_scale_set_mode(OX_scaleBottom, LV_SCALE_MODE_HORIZONTAL_TOP);
-	lv_obj_set_size(OX_scaleBottom, DISPLAY_CHART_WIDTH - 6, 0);
+	lv_obj_set_size(OX_scaleBottom, DISPLAY_CHART_WIDTH - 4, 0);
 	lv_obj_set_style_pad_hor(OX_scaleBottom, lv_chart_get_first_point_center_offset(chart), 0);
 	lv_obj_set_style_text_font(OX_scaleBottom, NULL, 0);
-	lv_obj_align(OX_scaleBottom, LV_ALIGN_BOTTOM_MID, -1, 0);
+	lv_obj_align(OX_scaleBottom, LV_ALIGN_BOTTOM_MID, 0, 1);
 	lv_scale_set_total_tick_count(OX_scaleBottom, 71);
 	lv_scale_set_major_tick_every(OX_scaleBottom, 5);
 	lv_obj_set_style_length(OX_scaleBottom, 4, LV_PART_ITEMS);
@@ -251,10 +255,10 @@ void display_setAxis(void)
 	////////////////////// chart TOP SIDE OX ////////////////////////
 	lv_obj_t *OX_scaleTop = lv_scale_create(chart);
 	lv_scale_set_mode(OX_scaleTop, LV_SCALE_MODE_HORIZONTAL_BOTTOM);
-	lv_obj_set_size(OX_scaleTop, DISPLAY_CHART_WIDTH - 6, 0);
+	lv_obj_set_size(OX_scaleTop, DISPLAY_CHART_WIDTH - 4, 0);
 	lv_obj_set_style_pad_hor(OX_scaleTop, lv_chart_get_first_point_center_offset(chart), 0);
 	lv_obj_set_style_text_font(OX_scaleTop, NULL, 0);
-	lv_obj_align(OX_scaleTop, LV_ALIGN_TOP_MID, -1, 0);
+	lv_obj_align(OX_scaleTop, LV_ALIGN_TOP_MID, 0, 0);
 	lv_scale_set_total_tick_count(OX_scaleTop, 71);
 	lv_scale_set_major_tick_every(OX_scaleTop, 5);
 	lv_obj_set_style_length(OX_scaleTop, 4, LV_PART_ITEMS);
@@ -272,7 +276,7 @@ void display_setAxis(void)
 	lv_obj_set_size(OY_scale_1, 0, DISPLAY_CHART_HEIGHT - 4);
 	lv_obj_set_style_pad_hor(OY_scale_1, lv_chart_get_first_point_center_offset(chart), 0);
 	lv_obj_set_style_text_font(OY_scale_1, NULL, 0);
-	lv_obj_align(OY_scale_1, LV_ALIGN_CENTER, 0, 0);
+	lv_obj_align(OY_scale_1, LV_ALIGN_CENTER, 2, 0);
 	lv_scale_set_total_tick_count(OY_scale_1, 51);
 	lv_scale_set_major_tick_every(OY_scale_1, 5);
 	lv_obj_set_style_length(OY_scale_1, 4, LV_PART_ITEMS);
@@ -288,7 +292,7 @@ void display_setAxis(void)
 	lv_obj_set_size(OY_scale_2, 0, DISPLAY_CHART_HEIGHT - 4);
 	lv_obj_set_style_pad_hor(OY_scale_2, lv_chart_get_first_point_center_offset(chart), 0);
 	lv_obj_set_style_text_font(OY_scale_2, NULL, 0);
-	lv_obj_align(OY_scale_2, LV_ALIGN_CENTER, 0, 0);
+	lv_obj_align(OY_scale_2, LV_ALIGN_CENTER, 2, 0);
 	lv_scale_set_total_tick_count(OY_scale_2, 51);
 	lv_scale_set_major_tick_every(OY_scale_2, 5);
 	lv_obj_set_style_length(OY_scale_2, 4, LV_PART_ITEMS);
@@ -323,7 +327,7 @@ void display_setAxis(void)
 	lv_obj_set_size(OY_scaleRight, 0, DISPLAY_CHART_HEIGHT - 4);
 	lv_obj_set_style_pad_hor(OY_scaleRight, lv_chart_get_first_point_center_offset(chart), 0);
 	lv_obj_set_style_text_font(OY_scaleRight, NULL, 0);
-	lv_obj_align(OY_scaleRight, LV_ALIGN_RIGHT_MID, 0, 0);
+	lv_obj_align(OY_scaleRight, LV_ALIGN_RIGHT_MID, 2, 0);
 	lv_scale_set_total_tick_count(OY_scaleRight, 51);
 	lv_scale_set_major_tick_every(OY_scaleRight, 5);
 	lv_obj_set_style_length(OY_scaleRight, 4, LV_PART_ITEMS);
@@ -333,6 +337,31 @@ void display_setAxis(void)
 	//lv_obj_set_style_line_color(OY_scale_1, lv_palette_main(LV_PALETTE_BLUE), LV_PART_ITEMS);
 	//lv_obj_set_style_line_color(OY_scale_1, lv_palette_main(LV_PALETTE_RED), LV_PART_INDICATOR);
 	lv_obj_add_style(OY_scale_1, &style_axis, LV_PART_MAIN);
+
+
+	lv_obj_set_style_bg_opa(OX_scale_1, LV_OPA_TRANSP, LV_PART_MAIN);
+	lv_obj_set_style_line_opa(OX_scale_1, LV_OPA_TRANSP, LV_PART_MAIN);
+
+	lv_obj_set_style_bg_opa(OX_scale_2, LV_OPA_TRANSP, LV_PART_MAIN);
+	lv_obj_set_style_line_opa(OX_scale_2, LV_OPA_TRANSP, LV_PART_MAIN);
+
+	lv_obj_set_style_bg_opa(OY_scale_1, LV_OPA_TRANSP, LV_PART_MAIN);
+	lv_obj_set_style_line_opa(OY_scale_1, LV_OPA_TRANSP, LV_PART_MAIN);
+
+	lv_obj_set_style_bg_opa(OY_scale_2, LV_OPA_TRANSP, LV_PART_MAIN);
+	lv_obj_set_style_line_opa(OY_scale_2, LV_OPA_TRANSP, LV_PART_MAIN);
+
+	lv_obj_set_style_bg_opa(OX_scaleTop, LV_OPA_TRANSP, LV_PART_MAIN);
+	lv_obj_set_style_line_opa(OX_scaleTop, LV_OPA_TRANSP, LV_PART_MAIN);
+
+	lv_obj_set_style_bg_opa(OX_scaleBottom, LV_OPA_TRANSP, LV_PART_MAIN);
+	lv_obj_set_style_line_opa(OX_scaleBottom, LV_OPA_TRANSP, LV_PART_MAIN);
+
+	lv_obj_set_style_bg_opa(OY_scaleLeft, LV_OPA_TRANSP, LV_PART_MAIN);
+	lv_obj_set_style_line_opa(OY_scaleLeft, LV_OPA_TRANSP, LV_PART_MAIN);
+
+	lv_obj_set_style_bg_opa(OY_scaleRight, LV_OPA_TRANSP, LV_PART_MAIN);
+	lv_obj_set_style_line_opa(OY_scaleRight, LV_OPA_TRANSP, LV_PART_MAIN);
 }
 
 void update_chart(lv_timer_t *timer) {
