@@ -2,7 +2,7 @@
 
 
 /// Private variables ///
-uint8_t buf1[RESOLUTION_HORIZONTAL * RESOLUTION_VERTICAL / 10 * BYTES_PER_PIXEL];
+uint8_t buf1[RESOLUTION_HORIZONTAL * RESOLUTION_VERTICAL / 2 * BYTES_PER_PIXEL];
 uint16_t *framebuffer;
 
 ////////////////////// Right side buttons local objects/////////////////
@@ -21,7 +21,8 @@ static lv_obj_t *time;
 
 ////////////////////// Data display local objects //////////////////////
 static lv_obj_t * chart;
-static lv_chart_series_t *ser;
+static lv_chart_series_t *ADC_dataSeries;
+
 ////////////////////////////////////////////////////////////////////////
 
 // uint32_t my_ltdc_layer_index = 0; /* typically 0 or 1 */
@@ -29,13 +30,13 @@ static lv_chart_series_t *ser;
 
 void my_flush_cb(lv_display_t *display, const lv_area_t *area, uint8_t *px_map) {
     uint16_t *buf16 = (uint16_t *)px_map;
-    int32_t x, y;
+    uint16_t *framebuffer = (uint16_t *)(SDRAM_BANK_ADDR);
 
-    for (y = area->y1; y <= area->y2; y++) {
-        for (x = area->x1; x <= area->x2; x++) {
-            BSP_SDRAM_WriteData(SDRAM_BANK_ADDR + (y * 480 + x) * sizeof(uint16_t), buf16, sizeof(uint16_t));
-            buf16++;
-        }
+    int32_t width = area->x2 - area->x1 + 1;
+    int32_t height = area->y2 - area->y1 + 1;
+
+    for (int32_t y = 0; y < height; y++) {
+        memcpy(&framebuffer[(area->y1 + y) * 480 + area->x1], &buf16[y * width], width * sizeof(uint16_t));
     }
 
     display_Simple_Update(SDRAM_BANK_ADDR);
@@ -45,11 +46,12 @@ void my_flush_cb(lv_display_t *display, const lv_area_t *area, uint8_t *px_map) 
 void display_init(void)
 {
 	lv_init();
-	lv_tick_set_cb(HAL_GetTick);
+	//lv_tick_set_cb(HAL_GetTick);
 	lv_display_t *display1 = lv_display_create(RESOLUTION_HORIZONTAL, RESOLUTION_VERTICAL);
 	lv_display_set_buffers(display1, buf1, NULL, sizeof(buf1), LV_DISPLAY_RENDER_MODE_PARTIAL);
 	lv_display_set_flush_cb(display1, my_flush_cb);
 	lv_obj_set_style_bg_color(lv_scr_act(), lv_color_hex(0x43444d), LV_STATE_DEFAULT);
+	HAL_NVIC_SetPriority(SysTick_IRQn, 1, 0);
 	//ui_init();
 
 
@@ -178,15 +180,20 @@ void display_chartWindow(void)
 	display_setAxis();
 
 	////////////////////// chart ADC Data plot ////////////////////////
-	//uint32_t *ADC_dataPtr = ADC_getDataPtrBuffer1();
-	ser = lv_chart_add_series(chart, lv_palette_main(LV_PALETTE_RED), LV_CHART_AXIS_PRIMARY_Y);
+	ADC_dataSeries = lv_chart_add_series(chart, lv_color_hex(0xff0000), LV_CHART_AXIS_PRIMARY_Y);
 	lv_chart_set_range(chart, LV_CHART_AXIS_PRIMARY_Y, -4200, 4200);
-    lv_chart_set_point_count(chart, 480);
-    //lv_chart_set_ext_y_array(chart, ser, (int32_t*)ADC_dataPtr);
+    lv_chart_set_point_count(chart, 400);
+    lv_chart_set_ext_y_array(chart, ADC_dataSeries, (int32_t*)ADC_getProperBuffer());
+
+    static lv_style_t style_line;
+    lv_style_init(&style_line);
+    lv_style_set_line_width(&style_line, 3);
+    lv_obj_add_style(chart, &style_line, LV_PART_ITEMS);
 
     lv_timer_create(update_chart, 100, NULL);
+    lv_chart_set_update_mode(chart, LV_CHART_UPDATE_MODE_SHIFT);
 	lv_chart_refresh(chart);
-	//lv_obj_move_foreground(chart);
+
 }
 
 void display_setAxis(void)
@@ -366,8 +373,10 @@ void display_setAxis(void)
 
 void update_chart(lv_timer_t *timer) {
 	//@important -> DMA IRQ after copied one buffer is placed in stm32f746xx_it.c
-	uint32_t *ADC_dataPtr = ADC_getProperBuffer();
-	lv_chart_set_ext_y_array(chart, ser, (int32_t*)ADC_dataPtr);
+	HAL_GPIO_TogglePin(USER_LED_GPIO_Port, USER_LED_Pin);
+	__IO uint32_t *ADC_dataPtr = ADC_getProperBuffer();
+
+	lv_chart_set_ext_y_array(chart, ADC_dataSeries, (int32_t*)ADC_dataPtr);
     lv_chart_refresh(chart);
 
 // DOUBLE BUFFERING TEST ///

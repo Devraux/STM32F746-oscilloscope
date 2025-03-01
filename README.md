@@ -5,8 +5,5 @@
 
 ## Display first working version (ver. 1.1) 
 
-### Noise Signal test  
-![Image](https://github.com/user-attachments/assets/60c8663d-064e-4e49-b82e-e858f35128ea)
-
 ### Square Wave test (STM32 PWM)
-![Image](https://github.com/user-attachments/assets/4d3d4904-11e1-4e6a-9687-f9dcfdda9d1f) 
+![Image](https://github.com/user-attachments/assets/41d6b2b9-ad10-4149-8d7b-3159fac88165)

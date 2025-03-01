@@ -26,6 +26,7 @@
 #include "../STM32F746_Hardware_Lib/stm32746g_discovery_sdram.h"
 #include "../Core/Inc/adc.h"
 #include "../Inc/ltdc.h"
+#include <string.h>
 
 #define RESOLUTION_HORIZONTAL 480
 #define RESOLUTION_VERTICAL 272

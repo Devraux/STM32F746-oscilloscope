@@ -137,13 +137,8 @@ int main(void)
 		//	  HAL_GPIO_TogglePin(USER_LED_GPIO_Port, USER_LED_Pin);
 		//	  HAL_Delay(900);
 
-		//ADC_getCurrentValue(&ADC_buffer); //ADC Circular mode and DMA test
-		//printf("ADC value: %ld\n\r", ADC_buffer);
-		//HAL_Delay(200);
-
-
-		HAL_Delay(100);
 		lv_task_handler();
+		HAL_Delay(1);
 
     /* USER CODE END WHILE */
 

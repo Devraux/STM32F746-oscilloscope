@@ -9,7 +9,7 @@
 ../Core/Src/stm32f7xx_it.c:188:6:SysTick_Handler	1
 ../Core/Src/stm32f7xx_it.c:209:6:ADC_IRQHandler	1
 ../Core/Src/stm32f7xx_it.c:224:6:FMC_IRQHandler	1
-../Core/Src/stm32f7xx_it.c:238:6:DMA2_Stream0_IRQHandler	2
+../Core/Src/stm32f7xx_it.c:238:6:DMA2_Stream0_IRQHandler	1
 ../Core/Src/stm32f7xx_it.c:256:6:LTDC_IRQHandler	1
 ../Core/Src/stm32f7xx_it.c:270:6:DMA2D_IRQHandler	1
 ../Core/Src/stm32f7xx_it.c:282:23:get_ADCActiveBuffer	1
