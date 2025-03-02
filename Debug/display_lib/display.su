@@ -1,7 +1,8 @@
-../display_lib/display.c:31:6:my_flush_cb	32	static
-../display_lib/display.c:374:6:update_chart	8	static
-../display_lib/display.c:65:6:display_buttonsWindow	64	static
-../display_lib/display.c:136:6:display_bottomBarWindow	32	static
-../display_lib/display.c:199:6:display_setAxis	56	static
-../display_lib/display.c:163:6:display_chartWindow	40	static
-../display_lib/display.c:46:6:display_init	32	static
+../display_lib/display.c:40:6:my_flush_cb	32	static
+../display_lib/display.c:383:6:update_chart	8	static
+../display_lib/display.c:32:6:HAL_GPIO_EXTI_Callback	0	static
+../display_lib/display.c:74:6:display_buttonsWindow	64	static
+../display_lib/display.c:145:6:display_bottomBarWindow	32	static
+../display_lib/display.c:208:6:display_setAxis	56	static
+../display_lib/display.c:172:6:display_chartWindow	40	static
+../display_lib/display.c:55:6:display_init	32	static

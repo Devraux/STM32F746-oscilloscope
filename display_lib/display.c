@@ -5,6 +5,8 @@
 uint8_t buf1[RESOLUTION_HORIZONTAL * RESOLUTION_VERTICAL / 2 * BYTES_PER_PIXEL];
 uint16_t *framebuffer;
 
+static button_state button_state_t = {BUTTON_RELEASED};
+
 ////////////////////// Right side buttons local objects/////////////////
 static lv_obj_t *label_stopRun;
 static lv_obj_t *label_Cursor;
@@ -25,8 +27,14 @@ static lv_chart_series_t *ADC_dataSeries;
 
 ////////////////////////////////////////////////////////////////////////
 
-// uint32_t my_ltdc_layer_index = 0; /* typically 0 or 1 */
 
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+{
+  if (GPIO_Pin == USER_BUTTON_Pin) //temporary stop button
+  {
+	  button_state_t.BUTTON_STOP = !button_state_t.BUTTON_STOP;
+  }
+}
 
 void my_flush_cb(lv_display_t *display, const lv_area_t *area, uint8_t *px_map) {
     uint16_t *buf16 = (uint16_t *)px_map;
@@ -162,7 +170,7 @@ void display_bottomBarWindow(void)
 
 void display_chartWindow(void)
 {
-////////////////////// chart basic properties /////////////////
+////////////////////// chart basic properties ////////////////////////////
 	chart = lv_chart_create(lv_screen_active());
 	lv_obj_set_size(chart, DISPLAY_CHART_WIDTH, DISPLAY_CHART_HEIGHT);
 	lv_obj_align(chart, LV_ALIGN_CENTER, -38, -12);
@@ -175,11 +183,15 @@ void display_chartWindow(void)
 	lv_chart_set_div_line_count(chart, 11, 15);
 	lv_obj_set_style_width(chart, 0, LV_PART_SCROLLBAR);
 	//lv_obj_set_style_bg_opa(chart, LV_OPA_COVER, LV_PART_MAIN);
+////////////////////////////////////////////////////////////////////////
 
-	////////////////////// chart OX & OY PLOT AXIS ////////////////////////
+
+////////////////////// chart OX & OY PLOT AXIS ////////////////////////
 	display_setAxis();
+////////////////////////////////////////////////////////////////////////
 
-	////////////////////// chart ADC Data plot ////////////////////////
+
+////////////////////// chart ADC Data plot ////////////////////////////
 	ADC_dataSeries = lv_chart_add_series(chart, lv_color_hex(0xff0000), LV_CHART_AXIS_PRIMARY_Y);
 	lv_chart_set_range(chart, LV_CHART_AXIS_PRIMARY_Y, -4200, 4200);
     lv_chart_set_point_count(chart, 400);
@@ -193,12 +205,14 @@ void display_chartWindow(void)
     lv_timer_create(update_chart, 100, NULL);
     lv_chart_set_update_mode(chart, LV_CHART_UPDATE_MODE_SHIFT);
 	lv_chart_refresh(chart);
+////////////////////////////////////////////////// ////////////////////
+
 
 }
 
 void display_setAxis(void)
 {
-	////////////////////// chart OX & OY Axis ////////////////////////
+	////////////////////// chart OX & OY Axis /////////////////////
 	static lv_style_t style_axis;
 	lv_style_init(&style_axis);
 	lv_style_set_line_width(&style_axis, 1);
@@ -373,9 +387,13 @@ void display_setAxis(void)
 
 void update_chart(lv_timer_t *timer) {
 	//@important -> DMA IRQ after copied one buffer is placed in stm32f746xx_it.c
-	HAL_GPIO_TogglePin(USER_LED_GPIO_Port, USER_LED_Pin);
-	__IO uint32_t *ADC_dataPtr = ADC_getProperBuffer();
 
+	if(button_state_t.BUTTON_STOP == BUTTON_PRESSED)
+		return;
+
+	HAL_GPIO_TogglePin(USER_LED_GPIO_Port, USER_LED_Pin);
+
+	__IO uint32_t *ADC_dataPtr = ADC_getProperBuffer();
 	lv_chart_set_ext_y_array(chart, ADC_dataSeries, (int32_t*)ADC_dataPtr);
     lv_chart_refresh(chart);
 

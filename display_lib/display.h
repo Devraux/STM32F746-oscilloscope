@@ -27,6 +27,7 @@
 #include "../Core/Inc/adc.h"
 #include "../Inc/ltdc.h"
 #include <string.h>
+#include <stdbool.h>
 
 #define RESOLUTION_HORIZONTAL 480
 #define RESOLUTION_VERTICAL 272
@@ -37,7 +38,17 @@
 #define DISPLAY_CHART_WIDTH 	404
 #define DISPLAY_CHART_HEIGHT 	248
 
-void lv_example_get_started_2(void);
+#define BUTTON_PRESSED			1
+#define BUTTON_RELEASED			0
+
+typedef struct button_state{
+	bool BUTTON_STOP;
+	bool BUTTON_CURSOR;
+	bool BUTTON_DC_AC_COUPLING;
+	bool BUTTONMATH;
+	bool BUTTON_OPTIONS;
+}button_state;
+
 
 /// display initialization
 void display_init(void);
@@ -83,7 +94,21 @@ void display_bottomBarWindow(void);
 ///void display_topBarWindow(void);
 
 
+///  Widget description: chart update callback called by lv_timer_create(display_chartWindow())
+///
+///  Displayed features:
+/// 					- update chart
+///						- STOP/RUN button feature
 void update_chart(lv_timer_t *timer);
+
+
+///  Widget description: display chart axes: OX and OY, additionally display scale and chart grid
+///
+///  Displayed features:
+/// 					- display scale
+///						- display chart grid
+///						-
 void display_setAxis(void);
+
 
 #endif

@@ -282,7 +282,11 @@ uint32_t *ADC_getProperBuffer(void)
 		return ADC_buffer2;
 }
 
+void ADC_sampleTransform(uint32_t *sample_buffer)
+{
+	for(uint32_t i = 0; i < ADC_dataBufferSize; i++)
 
+}
 
 
 /* USER CODE END 1 */

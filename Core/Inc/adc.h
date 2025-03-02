@@ -34,6 +34,7 @@ extern "C" {
 #include "stm32f7xx_it.h"
 #include "stdbool.h"
 
+
 /* USER CODE END Includes */
 
 extern ADC_HandleTypeDef hadc1;
@@ -43,6 +44,11 @@ extern ADC_HandleTypeDef hadc3;
 /* USER CODE BEGIN Private defines */
 #define ADC_dataBufferSize 400
 #define ADC_byteDataBufferSize ADC_dataBufferSize * sizeof(uint32_t)
+
+typedef enum ADC_activeBuffer{
+	current_activeBuffer1 = 1,
+	current_activeBuffer2 = 2,
+}ADC_activeBuffer;
 
 /* USER CODE END Private defines */
 
@@ -54,11 +60,7 @@ void MX_ADC3_Init(void);
 uint32_t *ADC_getDataPtrBuffer1(void);
 uint32_t *ADC_getDataPtrBuffer2(void);
 uint32_t *ADC_getProperBuffer(void);
-
-typedef enum ADC_activeBuffer{
-	current_activeBuffer1 = 1,
-	current_activeBuffer2 = 2,
-}ADC_activeBuffer;
+void ADC_sampleTransform(uint32_t *sample_buffer);
 
 /* USER CODE END Prototypes */
 
