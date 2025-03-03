@@ -439,11 +439,11 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
  ../Core/Inc/../../display_lib/../Core/Inc/../../Data_Buffer/Data_Buffer.h \
  ../Core/Inc/../../display_lib/../Core/Inc/stm32f7xx_it.h \
  ../Core/Inc/../../display_lib/../Core/Inc/adc.h \
- ../Core/Inc/../Inc/ltdc.h ../Core/Inc/../Inc/main.h \
- ../Core/Inc/../Inc/tim.h ../Core/Inc/adc.h ../Core/Inc/dma.h \
- ../Core/Inc/main.h ../Core/Inc/dma2d.h ../Core/Inc/ltdc.h \
- ../Core/Inc/tim.h ../Core/Inc/usart.h ../Core/Inc/gpio.h \
- ../Core/Inc/fmc.h
+ ../Drivers/CMSIS/DSP/Include/arm_math.h ../Core/Inc/../Inc/ltdc.h \
+ ../Core/Inc/../Inc/main.h ../Core/Inc/../Inc/tim.h ../Core/Inc/adc.h \
+ ../Core/Inc/dma.h ../Core/Inc/main.h ../Core/Inc/dma2d.h \
+ ../Core/Inc/ltdc.h ../Core/Inc/tim.h ../Core/Inc/usart.h \
+ ../Core/Inc/gpio.h ../Core/Inc/fmc.h
 ../Core/Inc/main.h:
 ../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal.h:
 ../Core/Inc/stm32f7xx_hal_conf.h:
@@ -895,6 +895,7 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
 ../Core/Inc/../../display_lib/../Core/Inc/../../Data_Buffer/Data_Buffer.h:
 ../Core/Inc/../../display_lib/../Core/Inc/stm32f7xx_it.h:
 ../Core/Inc/../../display_lib/../Core/Inc/adc.h:
+../Drivers/CMSIS/DSP/Include/arm_math.h:
 ../Core/Inc/../Inc/ltdc.h:
 ../Core/Inc/../Inc/main.h:
 ../Core/Inc/../Inc/tim.h:

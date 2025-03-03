@@ -293,7 +293,7 @@ main-build: STM_Discovery_Oscilloscope.elf secondary-outputs
 
 # Tool invocations
 STM_Discovery_Oscilloscope.elf STM_Discovery_Oscilloscope.map: $(OBJS) $(USER_OBJS) C:\Users\krzys\STM32CubeIDE\workspace_1.13.0\STM_Discovery_Oscilloscope\STM32F746NGHX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "STM_Discovery_Oscilloscope.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m7 -T"C:\Users\krzys\STM32CubeIDE\workspace_1.13.0\STM_Discovery_Oscilloscope\STM32F746NGHX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM_Discovery_Oscilloscope.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv5-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -Wl,--start-group -lc -lm -Wl,--end-group
+	arm-none-eabi-gcc -o "STM_Discovery_Oscilloscope.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m7 -T"C:\Users\krzys\STM32CubeIDE\workspace_1.13.0\STM_Discovery_Oscilloscope\STM32F746NGHX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM_Discovery_Oscilloscope.map" -Wl,--gc-sections -static -L"C:\Users\krzys\STM32CubeIDE\workspace_1.13.0\STM_Discovery_Oscilloscope\Drivers\CMSIS\DSP\Lib\GCC" --specs=nano.specs -mfpu=fpv5-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

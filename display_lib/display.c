@@ -22,18 +22,32 @@ static lv_obj_t *time;
 ////////////////////////////////////////////////////////////////////////
 
 ////////////////////// Data display local objects //////////////////////
-static lv_obj_t * chart;
+static lv_obj_t *chart;
 static lv_chart_series_t *ADC_dataSeries;
 
 ////////////////////////////////////////////////////////////////////////
 
+////////////////////// Measure window box local objects/////////////////
+static lv_obj_t *math_windowBox;
+static lv_obj_t *label_minVal;
+static lv_obj_t *label_maxVal;
+////////////////////////////////////////////////////////////////////////
 
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
-  if (GPIO_Pin == USER_BUTTON_Pin) //temporary stop button
-  {
-	  button_state_t.BUTTON_STOP = !button_state_t.BUTTON_STOP;
-  }
+/// STOP BUTTON CASE
+//  if (GPIO_Pin == USER_BUTTON_Pin) //temporary stop button
+//  {
+//	  button_state_t.BUTTON_STOP = !button_state_t.BUTTON_STOP;
+//  }
+
+/// MATH BUTTON CASE
+	if (GPIO_Pin == USER_BUTTON_Pin) //temporary stop button
+	{
+		//display_toggleWindowBox(math_box);
+		lv_async_call(display_toggleWindowBox, math_windowBox);
+	}
+
 }
 
 void my_flush_cb(lv_display_t *display, const lv_area_t *area, uint8_t *px_map) {
@@ -43,9 +57,8 @@ void my_flush_cb(lv_display_t *display, const lv_area_t *area, uint8_t *px_map) 
     int32_t width = area->x2 - area->x1 + 1;
     int32_t height = area->y2 - area->y1 + 1;
 
-    for (int32_t y = 0; y < height; y++) {
+    for (int32_t y = 0; y < height; y++)
         memcpy(&framebuffer[(area->y1 + y) * 480 + area->x1], &buf16[y * width], width * sizeof(uint16_t));
-    }
 
     display_Simple_Update(SDRAM_BANK_ADDR);
     lv_display_flush_ready(display);
@@ -67,6 +80,8 @@ void display_init(void)
 	display_chartWindow();
 	display_bottomBarWindow();
 	display_buttonsWindow();
+	display_createMathWindowBox();
+
 
 }
 
@@ -385,22 +400,69 @@ void display_setAxis(void)
 	lv_obj_set_style_line_opa(OY_scaleRight, LV_OPA_TRANSP, LV_PART_MAIN);
 }
 
-void update_chart(lv_timer_t *timer) {
+void update_chart(lv_timer_t *timer)
+{
 	//@important -> DMA IRQ after copied one buffer is placed in stm32f746xx_it.c
 
-	if(button_state_t.BUTTON_STOP == BUTTON_PRESSED)
+	if(button_state_t.BUTTON_STOP == BUTTON_PRESSED) // RUN/STOP button pressed
 		return;
 
 	HAL_GPIO_TogglePin(USER_LED_GPIO_Port, USER_LED_Pin);
 
-	__IO uint32_t *ADC_dataPtr = ADC_getProperBuffer();
+	if(!lv_obj_has_flag(math_windowBox, LV_OBJ_FLAG_HIDDEN))
+		display_updateMathWindowBox();
+
+	uint32_t *ADC_dataPtr = ADC_getProperBuffer();
 	lv_chart_set_ext_y_array(chart, ADC_dataSeries, (int32_t*)ADC_dataPtr);
     lv_chart_refresh(chart);
+}
 
-// DOUBLE BUFFERING TEST ///
-//    if((hadc3.DMA_Handle->Instance->CR & DMA_SxCR_CT) == 0)
-//    	printf("0\n");
-//    if((hadc3.DMA_Handle->Instance->CR & DMA_SxCR_CT) == 1)
-//    else
-//    	printf("1\n");
+void display_createMathWindowBox(void)
+{
+	math_windowBox = lv_win_create(lv_screen_active());
+	lv_obj_set_size(math_windowBox, DISPLAY_CHART_WIDTH - 16, 40);
+	lv_obj_align(math_windowBox, LV_ALIGN_BOTTOM_MID, -38, -30);
+	lv_win_add_title(math_windowBox, "Math tool");
+
+	lv_obj_t *math_toolHeader = lv_win_get_header(math_windowBox);
+	lv_obj_set_style_text_color(math_toolHeader, lv_color_hex(0xd6e32b), LV_PART_MAIN);
+	lv_obj_set_style_bg_color(math_toolHeader, lv_color_hex(0x3e6ed6), LV_PART_MAIN);
+	lv_obj_set_style_height(math_toolHeader, 15, LV_PART_MAIN);
+
+	lv_obj_t *math_toolContent = lv_win_get_content(math_windowBox);
+	lv_obj_set_style_text_color(math_toolContent, lv_color_hex(0xd6e32b), LV_PART_MAIN);
+	lv_obj_set_style_bg_color(math_toolContent, lv_color_hex(0x5c6e96), LV_PART_MAIN);
+	lv_obj_clear_flag(math_toolContent, LV_OBJ_FLAG_SCROLLABLE);
+	lv_obj_set_style_pad_top(math_toolContent, 15, LV_PART_MAIN);
+	lv_obj_set_style_pad_left(math_toolContent, 5, LV_PART_MAIN);
+
+	label_maxVal = lv_label_create(math_toolContent);
+	lv_obj_align(label_maxVal, LV_ALIGN_CENTER, -140, 0);
+
+	label_minVal = lv_label_create(math_toolContent);
+	lv_obj_align(label_minVal, LV_ALIGN_CENTER, -40, 0);
+
+	lv_obj_add_flag(math_windowBox, LV_OBJ_FLAG_HIDDEN);
+}
+
+void display_updateMathWindowBox(void)
+{
+	uint32_t *ADC_dataPtr = ADC_getProperBuffer();
+
+	lv_label_set_text_fmt(label_maxVal, "Max[V]: %.3f", (float)array_getMax(ADC_dataPtr) * (float)ADC_resolutionConst);
+    lv_label_set_text_fmt(label_minVal, "Min[V]: %.3f", (float)array_getMin(ADC_dataPtr) * (float)ADC_resolutionConst);
+}
+
+void display_toggleWindowBox(void *obj)
+{
+	 if(obj == NULL)
+		 return;
+
+	lv_obj_t *obj_t = (lv_obj_t *)obj;
+
+	if (lv_obj_has_flag(obj_t, LV_OBJ_FLAG_HIDDEN))
+		lv_obj_remove_flag(obj_t, LV_OBJ_FLAG_HIDDEN);
+
+	else
+		lv_obj_add_flag(obj_t, LV_OBJ_FLAG_HIDDEN);
 }

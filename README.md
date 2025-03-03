@@ -1,9 +1,26 @@
 # DISCOVERY STM32F746ng oscilloscope
 
-## Display layout.
-![Image](https://github.com/user-attachments/assets/aeeac5f0-eeb4-4497-806b-e69480440b14)
+## Project version: 1.4) 
 
-## Display first working version (ver. 1.3) 
+## Square Wave test (STM32 PWM)
+![Image](https://github.com/user-attachments/assets/235eb390-0308-4c4e-85d1-41bb358b9d34)
 
-### Square Wave test (STM32 PWM)
-![Image](https://github.com/user-attachments/assets/41d6b2b9-ad10-4149-8d7b-3159fac88165)
+# Todo:
+- [x] LVGL configuration( LVGL[window drawer] -> FMC[Flexible Memory Control] -> LTDC driver) 
+- [x] DISCOVERY external SDRAM connection with LTDC/FMC
+- [x] STM32F746 hardware configuration - ADC(circular mode), DMA(double buffering, circular mode), FMC, LTDC
+- [x] DMA double buffering mode configuration
+- [x] Math tool(basic version) 
+- [x] Project optimization and code refactoring
+- [x] STOP/RUN feature implementation
+- [x] Osiclooscope self test(external PWM generator based on same chip)
+- [ ] Simple manual user interface - buttons and encoders
+- [ ] horizontal and vertical stretching
+- [ ] ADC performance improvement(sampling)
+- [ ] Cursors
+- [ ] DS/AC COUPLING
+- [ ] PCB hardware fabrication
+- [ ] Signal attenuation feature and offset manage(remove or add offset) 
+- [ ] Additional options
+- [ ] Advanced testing(bandwidth etc.)
+- [ ] DSP features(hardware(STM32F746 FPU)) like FFT etc.

@@ -436,8 +436,9 @@ Core/Src/adc.o: ../Core/Src/adc.c ../Core/Inc/adc.h ../Core/Inc/main.h \
  ../Core/Src/lvgl/../STM32F746_Hardware_Lib/stm32746g_discovery_sdram.h \
  ../Core/Inc/../../display_lib/../Core/Inc/adc.h \
  ../Core/Inc/../Inc/ltdc.h ../Core/Inc/../Inc/main.h \
- ../Core/Inc/../Inc/tim.h ../Core/Inc/../../Data_Buffer/Data_Buffer.h \
- ../Core/Inc/stm32f7xx_it.h ../Core/Inc/adc.h
+ ../Core/Inc/../Inc/tim.h ../Drivers/CMSIS/DSP/Include/arm_math.h \
+ ../Core/Inc/../../Data_Buffer/Data_Buffer.h ../Core/Inc/stm32f7xx_it.h \
+ ../Core/Inc/adc.h
 ../Core/Inc/adc.h:
 ../Core/Inc/main.h:
 ../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal.h:
@@ -890,6 +891,7 @@ Core/Src/adc.o: ../Core/Src/adc.c ../Core/Inc/adc.h ../Core/Inc/main.h \
 ../Core/Inc/../Inc/ltdc.h:
 ../Core/Inc/../Inc/main.h:
 ../Core/Inc/../Inc/tim.h:
+../Drivers/CMSIS/DSP/Include/arm_math.h:
 ../Core/Inc/../../Data_Buffer/Data_Buffer.h:
 ../Core/Inc/stm32f7xx_it.h:
 ../Core/Inc/adc.h:

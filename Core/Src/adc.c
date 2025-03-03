@@ -22,6 +22,8 @@
 /* USER CODE BEGIN 0 */
 static uint32_t *ADC_buffer1 = NULL;
 static uint32_t *ADC_buffer2 = NULL;
+//static float *ADC_normalizedBuffer1 = NULL;
+//static float *ADC_normalizedBuffer2 = NULL;
 
 /* USER CODE END 0 */
 
@@ -125,6 +127,8 @@ void MX_ADC3_Init(void)
   //ADC_valueArr = (uint32_t*)malloc(ADC_byteDataBufferSize);//buffer 5 times bigger than available screen size(272px x 480 px) -> 480px*5=2400
   ADC_buffer1  = (uint32_t*)malloc(ADC_byteDataBufferSize);
   ADC_buffer2  = (uint32_t*)malloc(ADC_byteDataBufferSize);
+//  ADC_normalizedBuffer1 = (float*)malloc(ADC_byteDataBufferSize);
+//  ADC_normalizedBuffer2 = (float*)malloc(ADC_byteDataBufferSize);
   //data_bufferInit(&dataBuffer_t, ADC_currentValueArr, ADC_dataBufferSize);
 
   // ADC DMA START MEASUREMENTS
@@ -282,11 +286,44 @@ uint32_t *ADC_getProperBuffer(void)
 		return ADC_buffer2;
 }
 
-void ADC_sampleTransform(uint32_t *sample_buffer)
+int32_t array_getMin(uint32_t *ADC_buffer)
 {
-	for(uint32_t i = 0; i < ADC_dataBufferSize; i++)
+	q31_t min_value = 0;
+	uint32_t min_valueIndex = 0;
+	arm_min_q31((q31_t*)ADC_buffer, ADC_dataBufferSize, &min_value, &min_valueIndex);
 
+	return min_value;
+}
+int32_t array_getMax(uint32_t *ADC_buffer)
+{
+	q31_t max_value = 0;
+	uint32_t max_valueIndex = 0;
+	arm_max_q31((q31_t*)ADC_buffer, ADC_dataBufferSize, &max_value, &max_valueIndex);
+
+	return max_value;
 }
 
+//bool ADC_sampleTransform(float *dst_buffer, uint32_t *src_buffer, uint32_t data_length)
+//{
+//	const float ADC_resolution = 0.00080566406f;
+//
+//	arm_scale_f32((float*)src_buffer, ADC_resolution, dst_buffer, data_length);
+//
+//	return true;
+//}
+
+//float *ADC_getProperBufferNormalized(void)
+//{
+//	if(get_ADCActiveBuffer() == current_activeBuffer1)
+//	{
+//		ADC_sampleTransform(ADC_normalizedBuffer1, ADC_buffer1, ADC_dataBufferSize);
+//		return ADC_normalizedBuffer1;
+//	}
+//	else
+//	{
+//		ADC_sampleTransform(ADC_normalizedBuffer2, ADC_buffer2, ADC_dataBufferSize);
+//		return ADC_normalizedBuffer2;
+//	}
+//}
 
 /* USER CODE END 1 */

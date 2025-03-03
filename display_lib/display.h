@@ -28,6 +28,7 @@
 #include "../Inc/ltdc.h"
 #include <string.h>
 #include <stdbool.h>
+#include "arm_math.h"
 
 #define RESOLUTION_HORIZONTAL 480
 #define RESOLUTION_VERTICAL 272
@@ -110,5 +111,9 @@ void update_chart(lv_timer_t *timer);
 ///						-
 void display_setAxis(void);
 
+
+void display_createMathWindowBox(void);
+void display_updateMathWindowBox(void);
+void display_toggleWindowBox(void *obj);
 
 #endif
