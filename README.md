@@ -1,4 +1,5 @@
 # DISCOVERY STM32F746ng oscilloscope
+![Visitor Badge](https://visitor-badge.laobi.icu/badge?page_id=Devraux.STM_Discovery_Oscilloscope)
 
 ## Project version: 1.4) 
 
