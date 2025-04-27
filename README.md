@@ -1,4 +1,6 @@
 # DISCOVERY STM32F746ng oscilloscope
+### Project version: 1.4) 
+
 ## Square wave
 ![Visitor Badge](https://visitor-badge.laobi.icu/badge?page_id=Devraux.STM_Discovery_Oscilloscope)
 
@@ -7,8 +9,6 @@
 
 ## Sine signal(120kHz)
 ![sin](https://github.com/user-attachments/assets/3abdbcee-0449-47b0-80c3-6fff6e3fd952)
-
-## Project version: 1.4) 
 
 ## Square Wave test (STM32 PWM)
 ![Image](https://github.com/user-attachments/assets/235eb390-0308-4c4e-85d1-41bb358b9d34)
