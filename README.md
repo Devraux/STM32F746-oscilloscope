@@ -1,5 +1,8 @@
 # DISCOVERY STM32F746ng oscilloscope
-### Project version: 1.4) 
+### Project version: 1.5) 
+
+## Block diagram
+![image](https://github.com/user-attachments/assets/196bcf79-70e4-4674-a812-d78cfd692ba4)
 
 ## Square wave
 ![Visitor Badge](https://visitor-badge.laobi.icu/badge?page_id=Devraux.STM_Discovery_Oscilloscope)
